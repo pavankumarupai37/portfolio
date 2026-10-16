@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Float, MeshDistortMaterial } from "@react-three/drei";
-import { Github, Linkedin, Mail, Smartphone, Code2, Cpu, Award } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 function AnimatedPrism() {
   const meshRef = useRef();
@@ -122,13 +122,13 @@ export default function Portfolio3D() {
           <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-xl">
             <h3 className="text-lg font-bold text-indigo-400 mb-2">Claude & ADB Autonomous Testing</h3>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Exploring AI agent tools like 'Ghost in the Droid' that let Claude control real Android devices over ADB. Accessibility trees have transformed into critical API contracts for AI validation.
+              Exploring AI agent tools like Ghost in the Droid that let Claude control real Android devices over ADB. Accessibility trees have transformed into critical API contracts for AI validation.
             </p>
           </div>
           <div className="bg-slate-900/60 border border-slate-800 p-6 rounded-xl">
             <h3 className="text-lg font-bold text-cyan-400 mb-2">React Native Performance Tuning</h3>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Reducing JavaScript bridge overhead and optimizing `<Text>` and `<View>` components unlocks massive frame-rate boosts (up to 70% higher FPS) on heavy UI screens.
+              Reducing JavaScript bridge overhead and optimizing Text and View components unlocks massive frame-rate boosts (up to 70% higher FPS) on heavy UI screens.
             </p>
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function Portfolio3D() {
                 <span className="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full">2022 – 2024</span>
               </div>
               <ul className="mt-4 space-y-2 text-slate-300 text-sm list-disc list-inside">
-                <li>Built native modules and published `rn-zendesk` as a public npm package averaging 20+ weekly downloads.</li>
+                <li>Built native modules and published rn-zendesk as a public npm package averaging 20+ weekly downloads.</li>
                 <li>Led release automation with Fastlane and Firebase App Distribution.</li>
               </ul>
             </div>
