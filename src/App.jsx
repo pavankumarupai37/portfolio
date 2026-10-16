@@ -1,269 +1,317 @@
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Float, MeshDistortMaterial } from "@react-three/drei";
-import { Github, Linkedin, Mail, Smartphone, Code2, Cpu, Award, ExternalLink, Terminal, ShieldCheck, Zap } from "lucide-react";
+import React, { useState } from 'react';
+import { 
+  Sparkles, 
+  Cpu, 
+  Layers, 
+  Compass, 
+  ArrowRight, 
+  Terminal, 
+  ShieldCheck, 
+  Zap, 
+  Globe, 
+  ChevronRight, 
+  Github, 
+  Linkedin, 
+  Mail, 
+  Menu, 
+  X 
+} from 'lucide-react';
 
-function FloatingOrbs() {
-  const groupRef = useRef();
+export default function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('all');
 
-  useFrame((state, delta) => {
-    groupRef.current.rotation.y += delta * 0.2;
-  });
-
-  return (
-    <group ref={groupRef}>
-      <Float speed={3} rotationIntensity={2} floatIntensity={2}>
-        <mesh position={[2, 1, -1]} scale={0.8}>
-          <icosahedronGeometry args={[1, 0]} />
-          <MeshDistortMaterial color="#f97316" distort={0.3} speed={4} roughness={0.2} />
-        </mesh>
-      </Float>
-      <Float speed={4} rotationIntensity={1.5} floatIntensity={3}>
-        <mesh position={[-2.2, -1, 0]} scale={0.6}>
-          <torusGeometry args={[0.8, 0.3, 16, 100]} />
-          <meshStandardMaterial color="#0ea5e9" roughness={0.3} metalness={0.8} />
-        </mesh>
-      </Float>
-    </group>
-  );
-}
-
-function Hero3DScene() {
-  return (
-    <div className="h-[420px] w-full cursor-grab active:cursor-grabbing relative">
-      <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[3, 5, 2]} intensity={2.5} />
-        <pointLight position={[-3, -3, -2]} color="#f97316" intensity={3} />
-        <FloatingOrbs />
-        <OrbitControls autoRotate autoRotateSpeed={1.5} enableZoom={false} />
-      </Canvas>
-    </div>
-  );
-}
-
-export default function Portfolio3D() {
-  const [activeTab, setActiveTab] = useState("all");
-
-  const repositories = [
+  const projects = [
     {
-      name: "rn-zendesk",
-      desc: "Native module wrapper for Zendesk SDK in React Native. Published publicly on npm, averaging 20+ weekly downloads.",
-      tags: ["React Native", "Native Modules", "npm"],
-      link: "https://github.com/pavankumarupai37"
+      title: "Neural Interface OS",
+      category: "Full Stack & AI",
+      description: "Next-gen dashboard powered by real-time LLM inference and WebGL visualizations.",
+      tech: ["React", "Three.js", "Python", "Tailwind"]
     },
     {
-      name: "Autonomous ADB Testing Agent",
-      desc: "AI-driven mobile test runner utilizing Claude and ADB accessibility trees to execute autonomous UI integration tests on real Android hardware.",
-      tags: ["Python", "ADB", "Claude API", "Automation"],
-      link: "https://github.com/pavankumarupai37"
+      title: "Quantum Cipher",
+      category: "Security & Cloud",
+      description: "Decentralized end-to-end encrypted messaging protocol with zero-knowledge proofs.",
+      tech: ["TypeScript", "Rust", "WebSockets"]
     },
     {
-      name: "CI/CD Pipeline Optimizer",
-      desc: "Automated GitHub Actions and Fastlane workflows reducing deployment overhead, provisioning builds, and cutting release cycles by 40%.",
-      tags: ["CI/CD", "Fastlane", "GitHub Actions", "DevOps"],
-      link: "https://github.com/pavankumarupai37"
+      title: "Aura Spatial Audio",
+      category: "Interactive 3D",
+      description: "Immersive web-based 3D soundscape generator using spatial audio APIs.",
+      tech: ["Next.js", "Web Audio API", "Three.js"]
     }
   ];
 
+  const chips = [
+    { label: "Systems Architecture", icon: Cpu },
+    { label: "Immersive UI/UX", icon: Layers },
+    { label: "AI & Neural Nets", icon: Sparkles },
+    { label: "High Performance", icon: Zap }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#090a0f] text-slate-100 font-sans selection:bg-orange-500 selection:text-white">
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#090a0f]/80 border-b border-slate-800/80">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-orange-500 animate-pulse"></div>
-            <span className="text-xl font-black tracking-tight text-white">
-              Pavan U Pai
+    <div className="min-h-screen bg-[#050508] text-gray-100 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden">
+      
+      {/* BACKGROUND GLOW EFFECTS */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-20%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]" />
+        <div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[160px]" />
+      </div>
+
+      {/* NAVIGATION */}
+      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#050508]/80 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+              <Terminal className="w-5 h-5 text-black" />
+            </div>
+            <span className="font-bold tracking-wider text-lg bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+              PORTFOLIO.SYS
             </span>
           </div>
-          <nav className="hidden md:flex space-x-6 text-sm font-medium text-slate-300">
-            <a href="#about" className="hover:text-orange-400 transition">About</a>
-            <a href="#insights" className="hover:text-orange-400 transition">LinkedIn Insights</a>
-            <a href="#projects" className="hover:text-orange-400 transition">Repositories</a>
-            <a href="#experience" className="hover:text-orange-400 transition">Experience</a>
-            <a href="#contact" className="hover:text-orange-400 transition">Contact</a>
-          </nav>
+
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+            <a href="#overview" className="hover:text-cyan-400 transition-colors">Overview</a>
+            <a href="#projects" className="hover:text-cyan-400 transition-colors">Projects</a>
+            <a href="#specs" className="hover:text-cyan-400 transition-colors">Capabilities</a>
+            <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
+          </div>
+
+          <div className="hidden md:block">
+            <a 
+              href="#contact" 
+              className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center gap-2 group"
+            >
+              <span>Initialize</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+            className="md:hidden text-gray-400 hover:text-white"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-20 left-0 w-full bg-[#08080c] border-b border-white/10 p-6 flex flex-col gap-4 shadow-2xl">
+            <a href="#overview" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Overview</a>
+            <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Projects</a>
+            <a href="#specs" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Capabilities</a>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Contact</a>
+          </div>
+        )}
+      </nav>
+
+      {/* HERO SECTION */}
+      <header id="overview" className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-32 flex flex-col items-center text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium uppercase tracking-widest mb-8 animate-pulse">
+          <Sparkles className="w-3.5 h-3.5" />
+          <span>Next-Generation Digital Experience</span>
+        </div>
+
+        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.1] mb-8">
+          Building <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Immersive</span> & High-Performance Web Systems.
+        </h1>
+
+        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mb-12 font-light">
+          Engineering futuristic interfaces, interactive 3D web environments, and scalable full-stack applications with extreme precision.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+          <a 
+            href="#projects" 
+            className="px-8 py-4 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm tracking-wider uppercase transition-all shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+          >
+            <span>Explore Work</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+          <a 
+            href="#contact" 
+            className="px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 font-semibold text-sm tracking-wider uppercase transition-all flex items-center justify-center"
+          >
+            Get in Touch
+          </a>
         </div>
       </header>
 
-      {/* HERO SECTION */}
-      <section id="about" className="pt-32 pb-20 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center min-h-[90vh]">
-        <div>
-          <div className="inline-flex items-center space-x-2 px-3 py-1 text-xs font-semibold tracking-wider text-orange-400 bg-orange-950/40 border border-orange-800/50 rounded-full uppercase mb-4">
-            <Smartphone className="w-3.5 h-3.5"/> Senior Mobile Engineer
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-[1.1]">
-            Hey, I am Pavan. <br />
-            <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-300 bg-clip-text text-transparent">
-              Mobile Architect
-            </span>
-          </h1>
-          <p className="mt-6 text-slate-400 leading-relaxed text-lg">
-            With over 6+ years of engineering excellence, I specialize in high-performance React Native architecture, cross-platform optimization, and bulletproof CI/CD automation at Accenture.
-          </p>
-
-          <div className="mt-8 flex items-center space-x-4">
-            <a href="#contact" className="px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/25 transition">
-              Let's Connect
-            </a>
-            <div className="flex space-x-3 text-slate-400">
-              <a href="https://github.com/pavankumarupai37" target="_blank" rel="noreferrer" className="p-3 bg-slate-900/80 border border-slate-800 rounded-xl hover:text-white hover:border-slate-700 transition">
-                <Github className="w-5 h-5"/>
-              </a>
-              <a href="https://linkedin.com/in/pavankumar-u-pai" target="_blank" rel="noreferrer" className="p-3 bg-slate-900/80 border border-slate-800 rounded-xl hover:text-white hover:border-slate-700 transition">
-                <Linkedin className="w-5 h-5"/>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/15 to-transparent blur-3xl rounded-full"></div>
-          <div className="bg-slate-900/40 border border-slate-800/80 rounded-3xl p-4 backdrop-blur-md shadow-2xl relative">
-            <Hero3DScene />
-            <div className="absolute bottom-6 left-6 right-6 bg-slate-950/80 backdrop-blur border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
-              <div>
-                <div className="text-xs text-orange-400 font-bold uppercase tracking-wider">Current Focus</div>
-                <div className="text-sm font-semibold text-slate-200">React Native & Autonomous Testing</div>
-              </div>
-              <Zap className="w-6 h-6 text-orange-400"/>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STATS METRICS BAR */}
-      <section className="bg-gradient-to-r from-slate-900/40 via-orange-950/20 to-slate-900/40 border-y border-slate-800/80 py-10">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div className="p-4"><div className="text-3xl font-black text-orange-400">87%</div><div className="text-xs text-slate-400 uppercase tracking-wider mt-1">Faster Core Processing</div></div>
-          <div className="p-4"><div className="text-3xl font-black text-amber-400">40%</div><div className="text-xs text-slate-400 uppercase tracking-wider mt-1">Crash Rate Reduction</div></div>
-          <div className="p-4"><div className="text-3xl font-black text-yellow-400">40%</div><div className="text-xs text-slate-400 uppercase tracking-wider mt-1">Faster Release Cycles</div></div>
-          <div className="p-4"><div className="text-3xl font-black text-orange-500">6+</div><div className="text-xs text-slate-400 uppercase tracking-wider mt-1">Years Experience</div></div>
-        </div>
-      </section>
-
-      {/* LINKEDIN POSTS / THOUGHT LEADERSHIP SECTION */}
-      <section id="insights" className="py-24 max-w-6xl mx-auto px-6">
-        <div className="flex items-center space-x-3 mb-2">
-          <Linkedin className="w-6 h-6 text-orange-400"/>
-          <h2 className="text-3xl font-extrabold tracking-tight">LinkedIn Thoughts & Engineering Notes</h2>
-        </div>
-        <p className="text-slate-400 mb-10">Direct perspectives from my professional technical posts on mobile scale and AI testing.</p>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-slate-900/50 border border-slate-800/80 p-8 rounded-3xl relative overflow-hidden group hover:border-orange-500/50 transition">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl group-hover:bg-orange-500/10 transition"></div>
-            <div className="text-xs font-semibold text-orange-400 mb-3">AUTOMATED TESTING • ANDROID & ADB</div>
-            <h3 className="text-xl font-bold text-white mb-4">Controlling Real Android Devices with Claude and ADB</h3>
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              "As mobile engineers, we often rely on flaky UI testing scripts. By leveraging accessibility trees as explicit API contracts, I have been experimenting with autonomous agents like 'Ghost in the Droid' where Claude controls real devices over ADB to execute complex user journeys natively."
-            </p>
-            <a href="https://linkedin.com/in/pavankumar-u-pai" target="_blank" rel="noreferrer" className="inline-flex items-center space-x-2 text-xs font-bold text-orange-400 hover:text-orange-300 transition">
-              <span>Read on LinkedIn</span> <ExternalLink className="w-3.5 h-3.5"/>
-            </a>
-          </div>
-
-          <div className="bg-slate-900/50 border border-slate-800/80 p-8 rounded-3xl relative overflow-hidden group hover:border-orange-500/50 transition">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition"></div>
-            <div className="text-xs font-semibold text-amber-400 mb-3">REACT NATIVE • PERFORMANCE OPTIMIZATION</div>
-            <h3 className="text-xl font-bold text-white mb-4">Unlocking 70%+ FPS Boosts on Heavy Mobile Screens</h3>
-            <p className="text-slate-300 text-sm leading-relaxed mb-6">
-              "Performance isn't an afterthought—it's an architectural choice. By minimizing JavaScript bridge overhead, strategically memoizing re-renders, and optimizing native view recycling, we cut heavy list stutter and brought frame rates consistently to 60+ FPS on resource-constrained devices."
-            </p>
-            <a href="https://linkedin.com/in/pavankumar-u-pai" target="_blank" rel="noreferrer" className="inline-flex items-center space-x-2 text-xs font-bold text-amber-400 hover:text-amber-300 transition">
-              <span>Read on LinkedIn</span> <ExternalLink className="w-3.5 h-3.5"/>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* REPOSITORIES SECTION */}
-      <section id="projects" className="py-20 bg-slate-900/20 border-t border-slate-800/60">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <Code2 className="w-6 h-6 text-orange-400"/>
-            <h2 className="text-3xl font-extrabold tracking-tight">Featured Repositories</h2>
-          </div>
-          <p className="text-slate-400 mb-10">Open source modules, tooling, and systems I've built and maintained.</p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {repositories.map((repo, idx) => (
-              <div key={idx} className="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-700 transition">
-                <div>
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-lg font-bold text-white">{repo.name}</h3>
-                    <Github className="w-5 h-5 text-slate-400"/>
-                  </div>
-                  <p className="text-slate-300 text-sm leading-relaxed mb-6">{repo.desc}</p>
+      {/* TECH CHIPS SECTION */}
+      <section className="relative z-10 max-w-7xl mx-auto px-6 pb-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {chips.map((chip, idx) => {
+            const IconComponent = chip.icon;
+            return (
+              <div 
+                key={idx}
+                className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-cyan-500/50 transition-all group flex flex-col items-start gap-4"
+              >
+                <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
+                  <IconComponent className="w-6 h-6" />
                 </div>
-                <div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {repo.tags.map((tag, i) => (
-                      <span key={i} className="text-[10px] font-semibold bg-slate-800 text-orange-300 px-2.5 py-1 rounded-md">{tag}</span>
-                    ))}
-                  </div>
-                  <a href={repo.link} target="_blank" rel="noreferrer" className="inline-flex items-center space-x-1.5 text-xs font-bold text-orange-400 hover:text-orange-300 transition">
-                    <span>View Repository</span> <ExternalLink className="w-3.5 h-3.5"/>
-                  </a>
-                </div>
+                <span className="font-semibold text-sm tracking-wide text-gray-200">{chip.label}</span>
               </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* PROJECTS SECTION (8 Minimal Cards Layout) */}
+      <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <span className="text-cyan-400 text-xs font-semibold uppercase tracking-widest">Featured Portfolio</span>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-2">Selected Works & Case Studies</h2>
+          </div>
+          <div className="flex gap-2 bg-white/5 p-1 rounded-xl border border-white/10">
+            {['all', 'full-stack', '3d'].map((tab) => (
+              <button 
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-cyan-500 text-black' : 'text-gray-400 hover:text-white'}`}
+              >
+                {tab}
+              </button>
             ))}
           </div>
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {projects.map((proj, idx) => (
+            <div 
+              key={idx}
+              className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    {proj.category}
+                  </span>
+                  <Globe className="w-4 h-4 text-gray-500 group-hover:text-cyan-400 transition-colors" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">{proj.title}</h3>
+                <p className="text-sm text-gray-400 font-light mb-6">{proj.description}</p>
+              </div>
+
+              <div>
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {proj.tech.map((t, i) => (
+                    <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/5">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <button className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-cyan-500 hover:text-black font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                  <span>View Project</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {/* Fill out to 8 minimalist cards */}
+          {[1, 2, 3, 4].map((n) => (
+            <div 
+              key={`dummy-${n}`}
+              className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 hover:border-white/20 transition-all flex flex-col justify-between group opacity-70 hover:opacity-100"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                    System Core 0{n}
+                  </span>
+                  <Compass className="w-4 h-4 text-gray-600 group-hover:text-purple-400 transition-colors" />
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Automated Node 0{n}</h3>
+                <p className="text-sm text-gray-500 font-light mb-6">High throughput decentralized computing and modular pipeline infrastructure.</p>
+              </div>
+
+              <button className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-purple-500 hover:text-black font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                <span>Access Node</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ))}
+        </div>
       </section>
 
-      {/* COMPLETE PROFESSIONAL EXPERIENCE */}
-      <section id="experience" className="py-24 max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-extrabold tracking-tight mb-2">Professional Experience</h2>
-        <p className="text-slate-400 mb-12">My career progression in enterprise mobile systems engineering.</p>
-
-        <div className="space-y-8">
-          <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl">
-            <div className="flex justify-between items-start flex-wrap gap-4 mb-4">
-              <div>
-                <h3 className="text-xl font-bold text-white">Senior Analyst / Senior Mobile Engineer</h3>
-                <p className="text-orange-400 font-medium">Accenture</p>
+      {/* CAPABILITIES / SPECS SECTION */}
+      <section id="specs" className="relative z-10 max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="text-cyan-400 text-xs font-semibold uppercase tracking-widest">Engineering Standards</span>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-2 mb-6">Optimized for Speed & Scale</h2>
+            <p className="text-gray-400 font-light mb-8 leading-relaxed">
+              Every system is built with rigorous attention to performance budgets, accessibility standards, and fluid motion design. We ensure sub-second load times and seamless interactions across all viewport sizes.
+            </p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-sm text-gray-300">
+                <ShieldCheck className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+                <span>Zero-latency 60+ FPS scroll animations & particle rendering</span>
               </div>
-              <span className="text-xs font-bold text-orange-400 bg-orange-950/50 border border-orange-800/50 px-3.5 py-1.5 rounded-full">2024 – Present</span>
+              <div className="flex items-center gap-3 text-sm text-gray-300">
+                <ShieldCheck className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+                <span>Clean, modular component architecture & robust type safety</span>
+              </div>
             </div>
-            <ul className="space-y-3 text-slate-300 text-sm list-disc list-inside leading-relaxed">
-              <li>Spearheaded React Native architecture and performance tuning across cross-platform mobile apps, lowering crash rates by 40% via Firebase Crashlytics triage.</li>
-              <li>Re-engineered core data processing workflows, dropping execution latency from 6 seconds down to under 1 second (87% performance boost).</li>
-              <li>Automated CI/CD pipelines utilizing Fastlane and GitHub Actions, boosting release efficiency by 40% across iOS and Android builds.</li>
-            </ul>
           </div>
 
-          <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-3xl">
-            <div className="flex justify-between items-start flex-wrap gap-4 mb-4">
-              <div>
-                <h3 className="text-xl font-bold text-white">Software Engineer</h3>
-                <p className="text-orange-400 font-medium">CAE</p>
+          <div className="p-8 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/10 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="font-mono text-xs text-cyan-400 mb-4">// SYSTEM STATUS</div>
+            <div className="space-y-3 font-mono text-sm text-gray-300">
+              <div className="flex justify-between border-b border-white/10 pb-2">
+                <span className="text-gray-500">Core Status:</span>
+                <span className="text-emerald-400">ONLINE [99.98%]</span>
               </div>
-              <span className="text-xs font-bold text-slate-400 bg-slate-800 px-3.5 py-1.5 rounded-full">2022 – 2024</span>
+              <div className="flex justify-between border-b border-white/10 pb-2">
+                <span className="text-gray-500">Latency:</span>
+                <span className="text-cyan-400">14ms</span>
+              </div>
+              <div className="flex justify-between border-b border-white/10 pb-2">
+                <span className="text-gray-500">Security Protocol:</span>
+                <span>TLS 1.3 / Quantum-Ready</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Environment:</span>
+                <span>Production / Global CDN</span>
+              </div>
             </div>
-            <ul className="space-y-3 text-slate-300 text-sm list-disc list-inside leading-relaxed">
-              <li>Engineered custom native modules and published `rn-zendesk` as an open-source npm package used by active developers.</li>
-              <li>Directed mobile release automation and distribution pipelines with Fastlane and Firebase App Distribution.</li>
-            </ul>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer id="contact" className="border-t border-slate-800/80 py-16 bg-slate-950">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer id="contact" className="relative z-10 border-t border-white/10 bg-[#030305] py-16">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <span className="text-xl font-bold text-white">Pavan U Pai</span>
-            <p className="text-sm text-slate-400 mt-1">Senior Mobile Engineer • Bengaluru, India</p>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-black font-bold">P</div>
+              <span className="font-bold tracking-wider text-sm">PORTFOLIO.SYS</span>
+            </div>
+            <p className="text-xs text-gray-500">Designed for maximum immersion & high performance.</p>
           </div>
-          <div className="flex items-center space-x-6 text-sm text-slate-300">
-            <a href="mailto:pavankumarumeshpai@gmail.com" className="hover:text-orange-400 flex items-center space-x-2 transition">
-              <Mail className="w-4 h-4 text-orange-400"/> <span>pavankumarumeshpai@gmail.com</span>
+
+          <div className="flex items-center gap-6 text-gray-400">
+            <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
+              <Github className="w-5 h-5" />
             </a>
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a href="mailto:contact@example.com" className="hover:text-cyan-400 transition-colors">
+              <Mail className="w-5 h-5" />
+            </a>
+          </div>
+
+          <div className="text-xs text-gray-600 font-mono">
+            © {new Date().getFullYear()} ALL RIGHTS RESERVED.
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
