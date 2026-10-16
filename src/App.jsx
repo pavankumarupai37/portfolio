@@ -1,313 +1,324 @@
 import React, { useState } from 'react';
 import { 
-  Sparkles, 
   Cpu, 
   Layers, 
-  Compass, 
-  ArrowRight, 
-  Terminal, 
-  ShieldCheck, 
   Zap, 
-  Globe, 
-  ChevronRight, 
+  Terminal, 
+  ArrowRight, 
   Github, 
   Linkedin, 
-  Mail, 
-  Menu, 
-  X 
+  ExternalLink, 
+  Globe, 
+  ChevronRight, 
+  Sparkles, 
+  Code2, 
+  Smartphone,
+  CheckCircle2,
+  Share2,
+  BookOpen
 } from 'lucide-react';
 
 export default function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('insights');
 
-  const projects = [
+  // Posts written in first-person ("I", "My") based on your LinkedIn topics
+  const techPosts = [
     {
-      title: "Neural Interface OS",
-      category: "Full Stack & AI",
-      description: "Next-gen dashboard powered by real-time LLM inference and WebGL visualizations.",
-      tech: ["React", "Three.js", "Python", "Tailwind"]
+      id: "rn-workers",
+      title: "Multithreading in React Native with Web Workers",
+      tag: "Mobile Architecture & Performance",
+      summary: "How I offload heavy computational tasks off the JavaScript thread to achieve a silky smooth 60 FPS user experience.",
+      content: `When building high-performance React Native applications, the single-threaded JavaScript bridge often becomes a major bottleneck for heavy computations like image processing, complex JSON parsing, or cryptography.
+
+In my recent engineering deep dive, I implemented and benchmarked React Native Workers. By moving heavy data manipulation to a background thread, I prevented UI frame drops and ensured that gestures, animations, and user interactions remain completely fluid. 
+
+Key Takeaways from My Benchmark:
+• Kept the JS Main Thread completely free for UI interactions.
+• Reduced frame drops by over 80% during background data processing.
+• Created a clean postMessage interface for asynchronous communication between threads.`
     },
     {
-      title: "Quantum Cipher",
-      category: "Security & Cloud",
-      description: "Decentralized end-to-end encrypted messaging protocol with zero-knowledge proofs.",
-      tech: ["TypeScript", "Rust", "WebSockets"]
+      id: "code-splitting",
+      title: "Mastering Lazy Loading & Code Splitting for Frontend Scale",
+      tag: "Web Performance & Optimization",
+      summary: "My strategic approach to reducing initial bundle sizes by up to 60% using dynamic imports and smart suspense fallbacks.",
+      content: `Huge JavaScript bundles are the silent killers of user retention and Lighthouse performance scores. 
+
+I wrote about my methodology for breaking down monolithic React/Next.js dynamic routes into demand-driven chunks. Instead of serving an all-in-one heavy bundle to the client, I leverage React.lazy(), Dynamic Imports, and route-level code splitting.
+
+My Architecture Blueprint:
+1. Critical Path First: Rendering core viewport components immediately.
+2. Route-Based Chunking: Loading heavy pages (like analytics or dashboards) only when requested.
+3. Micro-Interaction Loading: Deferring modal dialogs and heavy libraries (like Chart.js or Three.js) until user hover or scroll trigger.`
     },
     {
-      title: "Aura Spatial Audio",
-      category: "Interactive 3D",
-      description: "Immersive web-based 3D soundscape generator using spatial audio APIs.",
-      tech: ["Next.js", "Web Audio API", "Three.js"]
+      id: "mobile-optimization",
+      title: "Optimizing Mobile Memory Footprints & Re-render Cycles",
+      tag: "React Native Deep Dive",
+      summary: "Practical techniques I use to debug memory leaks, optimize FlatLists, and eliminate unnecessary re-renders.",
+      content: `Performance isn't an afterthought; it's a core architectural requirement. In my work with React Native apps, I frequently audit component lifecycle behaviors to eliminate wasted renders.
+
+By leveraging memoization (useMemo, useCallback) with surgical precision, profiling with React DevTools, and configuring FlatList windowSize & getItemLayout props, I transformed laggy scrollviews into native-speed experiences.`
     }
   ];
 
-  const chips = [
-    { label: "Systems Architecture", icon: Cpu },
-    { label: "Immersive UI/UX", icon: Layers },
-    { label: "AI & Neural Nets", icon: Sparkles },
-    { label: "High Performance", icon: Zap }
+  const githubProjects = [
+    {
+      name: "React Native Performance Suite",
+      description: "Custom hooks and web worker wrappers designed to offload computational tasks off the main JS thread.",
+      tech: ["React Native", "TypeScript", "Web Workers"],
+      stars: 12
+    },
+    {
+      name: "Code-Splitting Architecture Starter",
+      description: "A production-ready React boilerplate optimized for sub-second page loads, Lighthouse 95+ scores, and lazy routes.",
+      tech: ["React", "Vite", "Tailwind CSS"],
+      stars: 8
+    },
+    {
+      name: "Mobile State Profiler",
+      description: "A developer utility for tracking component re-renders and memory allocations in real-time.",
+      tech: ["JavaScript", "React Native", "DevTools"],
+      stars: 15
+    }
   ];
 
   return (
     <div className="min-h-screen bg-[#050508] text-gray-100 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden">
       
-      {/* BACKGROUND GLOW EFFECTS */}
+      {/* GLOWING BACKGROUND ORBS */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-20%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]" />
+        <div className="absolute top-[-10%] left-[-15%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]" />
         <div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[160px]" />
       </div>
 
-      {/* NAVIGATION */}
+      {/* NAVBAR */}
       <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#050508]/80 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
               <Terminal className="w-5 h-5 text-black" />
             </div>
-            <span className="font-bold tracking-wider text-lg bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-              PORTFOLIO.SYS
-            </span>
+            <div>
+              <span className="font-bold tracking-wider text-base bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent block">
+                PAVAN KUMAR
+              </span>
+              <span className="text-[10px] text-cyan-400 font-mono tracking-widest block uppercase">
+                @pavankumarupai37
+              </span>
+            </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-            <a href="#overview" className="hover:text-cyan-400 transition-colors">Overview</a>
-            <a href="#projects" className="hover:text-cyan-400 transition-colors">Projects</a>
-            <a href="#specs" className="hover:text-cyan-400 transition-colors">Capabilities</a>
-            <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
-          </div>
-
-          <div className="hidden md:block">
+          <div className="flex items-center gap-6">
             <a 
-              href="#contact" 
-              className="px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 hover:bg-white/20 border border-white/20 transition-all flex items-center gap-2 group"
+              href="https://github.com/pavankumarupai37" 
+              target="_blank" 
+              rel="noreferrer"
+              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white transition-all flex items-center gap-2 text-xs font-semibold"
             >
-              <span>Initialize</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <Github className="w-4 h-4" />
+              <span className="hidden sm:inline">GitHub Profile</span>
+            </a>
+            <a 
+              href="https://linkedin.com" 
+              target="_blank" 
+              rel="noreferrer"
+              className="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/20"
+            >
+              <Linkedin className="w-4 h-4" />
+              <span>Connect</span>
             </a>
           </div>
-
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-            className="md:hidden text-gray-400 hover:text-white"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
-
-        {/* Mobile Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 w-full bg-[#08080c] border-b border-white/10 p-6 flex flex-col gap-4 shadow-2xl">
-            <a href="#overview" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Overview</a>
-            <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Projects</a>
-            <a href="#specs" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Capabilities</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 hover:text-cyan-400 py-2">Contact</a>
-          </div>
-        )}
       </nav>
 
       {/* HERO SECTION */}
-      <header id="overview" className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-32 flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium uppercase tracking-widest mb-8 animate-pulse">
+      <header className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-24 flex flex-col items-center text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-widest mb-8">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Next-Generation Digital Experience</span>
+          <span>Software Engineer & Mobile Architect</span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.1] mb-8">
-          Building <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Immersive</span> & High-Performance Web Systems.
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-4xl leading-[1.15] mb-6">
+          Hi, I’m <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Pavan Kumar</span>. <br />
+          I Build Scalable Apps & Optimations.
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mb-12 font-light">
-          Engineering futuristic interfaces, interactive 3D web environments, and scalable full-stack applications with extreme precision.
+        <p className="text-base md:text-lg text-gray-400 max-w-2xl mb-10 font-light leading-relaxed">
+          I specialize in <strong className="text-gray-200 font-medium">React Native Workers</strong>, <strong className="text-gray-200 font-medium">Lazy Loading</strong>, <strong className="text-gray-200 font-medium">Code Splitting</strong>, and crafting high-performance mobile and web solutions.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+        <div className="flex flex-wrap justify-center gap-4">
           <a 
-            href="#projects" 
-            className="px-8 py-4 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm tracking-wider uppercase transition-all shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+            href="#insights" 
+            className="px-6 py-3.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
           >
-            <span>Explore Work</span>
-            <ArrowRight className="w-4 h-4" />
+            <BookOpen className="w-4 h-4" />
+            <span>Read My Insights</span>
           </a>
           <a 
-            href="#contact" 
-            className="px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 font-semibold text-sm tracking-wider uppercase transition-all flex items-center justify-center"
+            href="https://github.com/pavankumarupai37" 
+            target="_blank" 
+            rel="noreferrer"
+            className="px-6 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
           >
-            Get in Touch
+            <Code2 className="w-4 h-4" />
+            <span>View Repositories</span>
           </a>
         </div>
       </header>
 
-      {/* TECH CHIPS SECTION */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 pb-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {chips.map((chip, idx) => {
-            const IconComponent = chip.icon;
-            return (
-              <div 
-                key={idx}
-                className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-cyan-500/50 transition-all group flex flex-col items-start gap-4"
-              >
-                <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
-                  <IconComponent className="w-6 h-6" />
-                </div>
-                <span className="font-semibold text-sm tracking-wide text-gray-200">{chip.label}</span>
-              </div>
-            );
-          })}
+      {/* FEATURED STATS / CHIPS */}
+      <section className="relative z-10 max-w-7xl mx-auto px-6 pb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400">
+              <Smartphone className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-lg font-bold text-white">React Native</div>
+              <div className="text-xs text-gray-400">Workers & Thread Offloading</div>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-purple-500/10 text-purple-400">
+              <Zap className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-lg font-bold text-white">Web Performance</div>
+              <div className="text-xs text-gray-400">Lazy Loading & Splitting</div>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
+              <Github className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="text-lg font-bold text-white">Open Source</div>
+              <div className="text-xs text-gray-400">@pavankumarupai37</div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* PROJECTS SECTION (8 Minimal Cards Layout) */}
-      <section id="projects" className="relative z-10 max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <span className="text-cyan-400 text-xs font-semibold uppercase tracking-widest">Featured Portfolio</span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-2">Selected Works & Case Studies</h2>
-          </div>
-          <div className="flex gap-2 bg-white/5 p-1 rounded-xl border border-white/10">
-            {['all', 'full-stack', '3d'].map((tab) => (
-              <button 
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-cyan-500 text-black' : 'text-gray-400 hover:text-white'}`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+      {/* INSIGHTS / LINKEDIN POSTS SECTION (1st Person Explanations) */}
+      <section id="insights" className="relative z-10 max-w-7xl mx-auto px-6 py-20 border-t border-white/10">
+        <div className="mb-12">
+          <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest block mb-2">Technical Publications</span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">How I Think & Build Solutions</h2>
+          <p className="text-gray-400 text-sm mt-2">Here are my detailed architectural thoughts and breakdown of key topics I've shared with the community.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.map((proj, idx) => (
-            <div 
-              key={idx}
-              className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col justify-between group"
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {techPosts.map((post) => (
+            <article 
+              key={post.id}
+              className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    {proj.category}
+                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    {post.tag}
                   </span>
-                  <Globe className="w-4 h-4 text-gray-500 group-hover:text-cyan-400 transition-colors" />
+                  <Share2 className="w-4 h-4 text-gray-500" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">{proj.title}</h3>
-                <p className="text-sm text-gray-400 font-light mb-6">{proj.description}</p>
+                <h3 className="text-lg font-bold text-white mb-3">{post.title}</h3>
+                <p className="text-xs text-gray-300 font-light mb-4 leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
+                  "{post.summary}"
+                </p>
+                <div className="text-xs text-gray-400 space-y-2 whitespace-pre-line font-sans mb-6">
+                  {post.content}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                <span className="text-[10px] text-gray-500 font-mono">By Pavan Kumar</span>
+                <span className="text-xs text-cyan-400 flex items-center gap-1 font-semibold hover:underline cursor-pointer">
+                  <span>Read full thought</span>
+                  <ChevronRight className="w-3 h-3" />
+                </span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* GITHUB REPOSITORIES SECTION */}
+      <section className="relative z-10 max-w-7xl mx-auto px-6 py-20 border-t border-white/10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+          <div>
+            <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest block mb-2">GitHub Repositories</span>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Code & Architectural Work</h2>
+          </div>
+          <a 
+            href="https://github.com/pavankumarupai37" 
+            target="_blank" 
+            rel="noreferrer"
+            className="text-xs text-cyan-400 font-semibold uppercase tracking-wider flex items-center gap-2 hover:underline"
+          >
+            <span>Explore Github (@pavankumarupai37)</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {githubProjects.map((repo, idx) => (
+            <div 
+              key={idx}
+              className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-purple-500/40 transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2 text-white font-bold text-base group-hover:text-cyan-300 transition-colors">
+                    <Code2 className="w-4 h-4 text-cyan-400" />
+                    <span>{repo.name}</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400 font-light mb-6 leading-relaxed">
+                  {repo.description}
+                </p>
               </div>
 
               <div>
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {proj.tech.map((t, i) => (
-                    <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/5">
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {repo.tech.map((t, i) => (
+                    <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/5">
                       {t}
                     </span>
                   ))}
                 </div>
-                <button className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-cyan-500 hover:text-black font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
-                  <span>View Project</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+                <a 
+                  href="https://github.com/pavankumarupai37" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="w-full py-2 rounded-xl bg-white/5 hover:bg-cyan-500 hover:text-black font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+                >
+                  <span>View Code</span>
+                  <ChevronRight className="w-3 h-3" />
+                </a>
               </div>
             </div>
           ))}
-
-          {/* Fill out to 8 minimalist cards */}
-          {[1, 2, 3, 4].map((n) => (
-            <div 
-              key={`dummy-${n}`}
-              className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent border border-white/5 hover:border-white/20 transition-all flex flex-col justify-between group opacity-70 hover:opacity-100"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] uppercase font-semibold px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                    System Core 0{n}
-                  </span>
-                  <Compass className="w-4 h-4 text-gray-600 group-hover:text-purple-400 transition-colors" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">Automated Node 0{n}</h3>
-                <p className="text-sm text-gray-500 font-light mb-6">High throughput decentralized computing and modular pipeline infrastructure.</p>
-              </div>
-
-              <button className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-purple-500 hover:text-black font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2">
-                <span>Access Node</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CAPABILITIES / SPECS SECTION */}
-      <section id="specs" className="relative z-10 max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <span className="text-cyan-400 text-xs font-semibold uppercase tracking-widest">Engineering Standards</span>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mt-2 mb-6">Optimized for Speed & Scale</h2>
-            <p className="text-gray-400 font-light mb-8 leading-relaxed">
-              Every system is built with rigorous attention to performance budgets, accessibility standards, and fluid motion design. We ensure sub-second load times and seamless interactions across all viewport sizes.
-            </p>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 text-sm text-gray-300">
-                <ShieldCheck className="w-5 h-5 text-cyan-400 flex-shrink-0" />
-                <span>Zero-latency 60+ FPS scroll animations & particle rendering</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-gray-300">
-                <ShieldCheck className="w-5 h-5 text-cyan-400 flex-shrink-0" />
-                <span>Clean, modular component architecture & robust type safety</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="font-mono text-xs text-cyan-400 mb-4">// SYSTEM STATUS</div>
-            <div className="space-y-3 font-mono text-sm text-gray-300">
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-gray-500">Core Status:</span>
-                <span className="text-emerald-400">ONLINE [99.98%]</span>
-              </div>
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-gray-500">Latency:</span>
-                <span className="text-cyan-400">14ms</span>
-              </div>
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-gray-500">Security Protocol:</span>
-                <span>TLS 1.3 / Quantum-Ready</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Environment:</span>
-                <span>Production / Global CDN</span>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer id="contact" className="relative z-10 border-t border-white/10 bg-[#030305] py-16">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+      <footer className="relative z-10 border-t border-white/10 bg-[#030305] py-12">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-cyan-500 flex items-center justify-center text-black font-bold">P</div>
-              <span className="font-bold tracking-wider text-sm">PORTFOLIO.SYS</span>
-            </div>
-            <p className="text-xs text-gray-500">Designed for maximum immersion & high performance.</p>
+            <div className="font-bold text-sm text-white">PAVAN KUMAR</div>
+            <p className="text-xs text-gray-500 mt-1">Specializing in React Native, Web Workers, & Performance Optimization.</p>
           </div>
 
           <div className="flex items-center gap-6 text-gray-400">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
+            <a href="https://github.com/pavankumarupai37" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
               <Github className="w-5 h-5" />
             </a>
             <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="mailto:contact@example.com" className="hover:text-cyan-400 transition-colors">
-              <Mail className="w-5 h-5" />
-            </a>
-          </div>
-
-          <div className="text-xs text-gray-600 font-mono">
-            © {new Date().getFullYear()} ALL RIGHTS RESERVED.
           </div>
         </div>
       </footer>
