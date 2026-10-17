@@ -1,328 +1,628 @@
-import React, { useState } from 'react';
-import { 
-  Cpu, 
-  Layers, 
-  Zap, 
-  Terminal, 
-  ArrowRight, 
-  Github, 
-  Linkedin, 
-  ExternalLink, 
-  Globe, 
-  ChevronRight, 
-  Sparkles, 
-  Code2, 
-  Smartphone,
-  CheckCircle2,
-  Share2,
-  BookOpen
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#08080a">
+<meta name="description" content="Pavan U Pai — senior mobile engineer building React Native apps for iOS and Android. Bengaluru, India.">
+<meta property="og:title" content="Pavan U Pai — Senior Mobile Engineer">
+<meta property="og:description" content="React Native, iOS &amp; Android. Experience, writing and open source.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%2308080a'/%3E%3Ctext x='32' y='42' font-size='28' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23ff3b1d'%3EPP%3C/text%3E%3C/svg%3E">
+<title>Pavan U Pai — Senior Mobile Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="importmap">{ "imports": { "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.3.19/dist/lenis.mjs" } }</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+img,video{display:block;max-width:100%}
+ul{list-style:none}
+a,button{font:inherit;color:inherit;background:none;border:0;text-decoration:none;cursor:pointer}
+:root{--font-display:"Anton",sans-serif;--font-sans:"Onest",sans-serif;
+--background:#08080a;--foreground:#f3f1ea;--surface:#111114;--surface-2:#17171b;--muted:#807f78;
+--line:rgba(243,241,234,.1);--line-strong:rgba(243,241,234,.22);--accent:#ff3b1d;--accent-2:#ff6a3d;
+--gutter:2.5rem;--section:9rem;--eo:cubic-bezier(.16,1,.3,1);--eq:cubic-bezier(.165,.84,.44,1)}
+html{font-size:16px;background:#08080a;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media(max-width:1920px){html{font-size:.833333vw}}
+@media(max-width:1440px){html{font-size:1.111111vw}}
+@media(max-width:1024px){html{font-size:1.5625vw}}
+@media(max-width:640px){html{font-size:4.444444vw}:root{--gutter:16px}}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}
+body{background:transparent;color:#f3f1ea;font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+::selection{background:#ff3b1d;color:#08080a}
+main{position:relative;width:100%;overflow-x:hidden}
+.disp{font-family:var(--font-display);text-transform:uppercase;letter-spacing:-.01em}
+.eyebrow{display:flex;align-items:center;gap:.75rem;font-size:.8125rem;line-height:1.2;font-weight:500;text-transform:uppercase;letter-spacing:.22em;color:var(--muted)}
+.eyebrow:before{content:"";width:.5rem;height:.5rem;border-radius:9999px;background:var(--accent)}
+.sec{padding:var(--section) var(--gutter)}
+.lbl{font-size:.8125rem;text-transform:uppercase;letter-spacing:.22em;color:var(--muted)}
+/* reveals */
+.rv{opacity:0;transform:translateY(var(--y,16px)) scale(var(--s,1));transition:opacity var(--t,560ms) var(--eo) var(--d,0ms),transform var(--t,560ms) var(--eo) var(--d,0ms)}
+.rv.in,.go .rv{opacity:1;transform:none}
+.w{display:inline-block;overflow:hidden;vertical-align:top}.w.blk{display:block}
+.w>span{display:inline-block;transform:translateY(110%);opacity:0;transition:transform 850ms var(--eo) var(--d,0ms),opacity 850ms var(--eo) var(--d,0ms)}
+.in .w>span,.go .w>span{transform:none;opacity:1}
+.lt{display:inline-block;transform:translateY(100%);opacity:0;transition:transform 900ms var(--eo) var(--d,0ms),opacity 900ms var(--eo) var(--d,0ms)}
+.go .lt{transform:none;opacity:1}
+/* preloader */
+#pre{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:.75rem;padding:var(--gutter);transition:transform .65s cubic-bezier(.22,1,.36,1)}
+#pre:before{content:"";position:absolute;inset:0;z-index:-10;background:var(--background)}
+#pre .lb{font-size:1.75rem;line-height:1;transition:opacity .3s}
+#pre .ct{font-size:7.5rem;line-height:1;font-variant-numeric:tabular-nums;transition:opacity .3s}
+#pre .ct i{font-style:normal;color:var(--accent)}
+#pre.out{transform:translateY(-100%)}#pre.fade .lb,#pre.fade .ct{opacity:0}
+@media(min-width:640px){#pre{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:1rem}}
+/* nav */
+header{position:fixed;inset-inline:0;top:0;z-index:50;pointer-events:none}
+nav.top{pointer-events:auto;display:flex;align-items:center;justify-content:space-between;padding:1.5rem max(var(--gutter),env(safe-area-inset-right)) 1.5rem max(var(--gutter),env(safe-area-inset-left))}
+.logo{display:flex;align-items:center;gap:.75rem}
+.mono{display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:9999px;border:1px solid var(--line-strong);font-weight:600;letter-spacing:-.01em}
+.logo .lbl{display:none;font-weight:500}
+.links{display:none;gap:2.5rem}
+.links a{position:relative;font-size:.8125rem;font-weight:500;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .3s}
+.links a:after{content:"";position:absolute;bottom:-.25rem;left:0;height:1px;background:var(--accent);width:0;transition:width .3s}
+.links a:hover{color:var(--foreground)}.links a:hover:after{width:100%}
+.burger{width:2.5rem;height:2.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.375rem;position:relative;z-index:60}
+.burger span{height:.125rem;width:1.5rem;background:var(--foreground);transition:transform .3s,opacity .3s}
+.burger.open span:nth-child(1){transform:translateY(.5rem) rotate(45deg)}.burger.open span:nth-child(2){opacity:0}.burger.open span:nth-child(3){transform:translateY(-.5rem) rotate(-45deg)}
+#menu{position:fixed;inset:0;z-index:50;background:var(--background);display:flex;flex-direction:column;justify-content:center;padding-inline:var(--gutter);opacity:0;pointer-events:none;transition:opacity .45s ease-out}
+#menu.open{opacity:1;pointer-events:auto}
+#menu a{display:block;font-size:3.25rem;line-height:1;opacity:0;transform:translateY(48px);transition:opacity .42s ease-out,transform .42s ease-out}
+#menu.open a{opacity:1;transform:none;transition-delay:calc(120ms + var(--i)*80ms)}
+#menu li{overflow:hidden;padding:.4rem 0}
+@media(min-width:640px){.logo .lbl{display:block}}
+@media(min-width:768px){.links{display:flex}.burger,#menu{display:none}}
+/* hero */
+#top{position:relative;display:flex;flex-direction:column;min-height:100vh;min-height:100svh;overflow:hidden}
+.hrow{position:relative;z-index:30;display:flex;flex-direction:column;gap:2rem;padding:7rem var(--gutter) 0}
+.roles{font-size:1.75rem;line-height:1.05}
+.hdesc{max-width:26rem;font-size:1.0625rem;line-height:1.6;color:var(--muted)}
+.ptr{position:absolute;z-index:20;bottom:0;left:50%;transform:translateX(-50%);height:86vh;width:80vw;pointer-events:none}
+.gb{position:absolute;inset-inline:0;bottom:0;z-index:20;height:26vh;background:linear-gradient(to bottom,transparent,#08080a);pointer-events:none}
+h1.name{position:absolute;inset-inline:0;bottom:0;z-index:10;transform:translateY(6%);display:flex;flex-direction:column;align-items:center;line-height:.78;color:var(--accent);font-size:min(13rem,26vw,20vh);font-weight:400}
+h1.name span.l{display:block;white-space:nowrap}
+.cue{position:absolute;z-index:30;bottom:2rem;left:var(--gutter);display:flex;align-items:center;gap:.75rem;font-size:.8125rem;text-transform:uppercase;letter-spacing:.22em;color:var(--muted)}
+.cue:before{content:"";width:2.5rem;height:1px;background:var(--accent)}
+@media(min-width:640px){.hrow{padding-top:8rem;flex-direction:row;align-items:flex-start;justify-content:space-between}.roles{font-size:3.25rem}.hdesc{text-align:right}.ptr{width:48vw}h1.name{font-size:min(28rem,34vw,31vh)}}
+@media(min-width:1024px){.ptr{width:36vw}}
+#stage{position:fixed;right:max(var(--gutter),env(safe-area-inset-right));bottom:1.5rem;z-index:40;pointer-events:none;text-align:right}
+#stage .sn{font-size:.8125rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+#stage .st{font-family:var(--font-display);text-transform:uppercase;font-size:1.75rem;line-height:1.1;letter-spacing:-.01em;margin-top:.25rem}
+#stage .sc{font-size:.8125rem;color:var(--muted);margin-top:.25rem}
+#stage .sb{display:flex;gap:.375rem;justify-content:flex-end;margin-top:.75rem}
+#stage .sb i{width:1.25rem;height:2px;background:var(--line-strong);transition:background .3s}
+#stage .sb i.on{background:var(--accent)}
+#dim{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(8,8,10,.78) 0%,rgba(8,8,10,.62) 60%,rgba(8,8,10,.5) 100%)}
+#world{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;z-index:-1;pointer-events:none;display:block}
+/* liquid */
+.lq{position:relative;overflow:hidden;background:var(--surface)}
+.lq.bare{background:none}
+.lq img,.lq video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center bottom;pointer-events:auto}
+.lq .ov{position:absolute;inset:0;pointer-events:none}
+.lq .veil{background:var(--background);mix-blend-mode:color;opacity:.88;transition:opacity .38s ease-out}
+.lq .glow{background:linear-gradient(120deg,transparent 30%,color-mix(in srgb,var(--accent) 35%,transparent) 50%,transparent 70%);opacity:0;transition:opacity .38s ease-out}
+.lq .vig{background:radial-gradient(120% 120% at 50% 120%,color-mix(in srgb,#08080a 70%,transparent),transparent 60%)}
+.lq.hv .veil{opacity:0}.lq.hv .glow{opacity:1}
+/* marquee */
+.mq{overflow:hidden;border-block:1px solid var(--line);padding-block:2rem}
+.mt{display:flex;width:max-content;flex-wrap:nowrap;animation:marquee 45s linear infinite}
+.mt span{display:flex;align-items:center;gap:1rem;font-size:3.25rem;white-space:nowrap}
+.mt svg{flex-shrink:0;width:3rem;height:3rem;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.mq:hover .mt{animation-play-state:paused}
+.mt span:after{content:"";margin-inline:2rem;width:.625rem;height:.625rem;border-radius:9999px;background:var(--accent)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* headings */
+.h{margin-top:1.5rem;font-size:3.25rem;line-height:1}
+.h.n95{line-height:.95}
+@media(min-width:640px){.h.big{font-size:5rem}.h.xl{font-size:7.5rem}}
+.lead{margin-top:2rem;max-width:46ch;font-size:1.375rem;line-height:1.45;color:var(--muted)}
+/* story */
+.sg{display:grid;gap:3rem var(--gutter)}
+.pr{display:grid;grid-template-columns:auto 1fr;column-gap:1.5rem;border-top:1px solid var(--line);padding:2rem 0}
+.pr:last-child{border-bottom:1px solid var(--line)}
+.pr b{font-size:1.75rem;line-height:1.15;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent)}
+.pr h3,.vn h3{font-size:1.75rem;line-height:1.15;font-weight:600;letter-spacing:-.01em}
+.pr p{margin-top:.75rem;max-width:44ch;font-size:1.0625rem;line-height:1.6;color:var(--muted)}
+@media(min-width:1024px){.sg{grid-template-columns:repeat(12,1fr)}.sg>:first-child{grid-column:span 6}.sg>:last-child{grid-column:span 6;padding-top:.5rem}}
+/* ventures */
+.vh{display:flex;flex-direction:column;gap:1.5rem}
+@media(min-width:640px){.vh{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.vl{margin-top:4rem;display:grid;gap:4rem var(--gutter)}
+.vl .lq{aspect-ratio:16/11;width:100%;border-radius:.125rem}
+.vr{margin-top:1.5rem;border-top:1px solid var(--line);padding-top:1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem}
+.vr h3{transition:color .34s ease-out}.vc:hover h3{color:var(--accent)}
+.vr p{margin-top:.5rem;max-width:42ch;font-size:1.0625rem;line-height:1.6;color:var(--muted)}
+.vr .rt{flex-shrink:0;text-align:right;font-size:.8125rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+.vr .rt div{margin-top:.5rem;font-weight:500;color:var(--accent)}
+.vc .cat{margin-top:.75rem;font-size:.8125rem;text-transform:uppercase;letter-spacing:.22em;color:var(--muted)}
+@media(min-width:768px){.vl{grid-template-columns:1fr 1fr}.vl>li.od{margin-top:6rem}}
+/* impact */
+dl.im{margin-top:4rem;display:grid;border-top:1px solid var(--line)}
+.st{display:flex;flex-direction:column;gap:1rem;border-bottom:1px solid var(--line);padding:2.5rem 0}
+.st dd{font-size:7.5rem;line-height:.9;letter-spacing:-.01em;transition:color .34s ease-out}.st:hover dd{color:var(--accent)}
+.st dt{max-width:20ch;font-size:1.0625rem;line-height:1.6;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+@media(min-width:640px){dl.im{grid-template-columns:1fr 1fr}.st:nth-child(even){border-left:1px solid var(--line);padding-left:2rem}}
+@media(min-width:1024px){dl.im{grid-template-columns:repeat(4,1fr)}.st{padding-block:3rem}.st:nth-child(n){border-left:0;padding-left:0}.st:nth-child(n+2){border-left:1px solid var(--line);padding-left:2rem}}
+/* voices */
+.vg{margin-top:4rem;display:grid;gap:var(--gutter)}
+.vb{display:flex;align-items:baseline;gap:1.25rem;width:100%;border-top:1px solid var(--line);padding:1.75rem 0;text-align:left}
+li:last-child>.vb{border-bottom:1px solid var(--line)}
+.vb i{font-style:normal;font-size:.8125rem;font-variant-numeric:tabular-nums;letter-spacing:.18em;color:var(--muted);transition:color .3s}
+.vb .vn{flex:1}.vb h3{color:var(--muted);transition:color .3s}
+.vb .vn div{margin-top:.25rem;font-size:.8125rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+.vb u{display:block;height:1px;width:0;background:var(--accent);transition:width .35s var(--eo);align-self:center}
+.vb.on i{color:var(--accent)}.vb.on h3{color:var(--foreground)}.vb.on u{width:2.5rem}
+.fp{display:grid;gap:2rem;grid-template-columns:1fr!important}
+.fp blockquote{order:2}.fp .lq{order:1;aspect-ratio:4/5;width:100%;border-radius:.125rem}
+.fp p{max-width:30ch;font-size:1.75rem;font-weight:500;line-height:1.3;letter-spacing:-.01em;color:var(--foreground)}
+.fp p span{display:inline-block;opacity:0;transform:translateY(18px);animation:wr .52s var(--eq) forwards;animation-delay:calc(var(--i)*22ms)}
+@keyframes wr{to{opacity:1;transform:none}}
+.fp footer{position:static;pointer-events:auto;margin-top:2rem;font-size:.8125rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+@media(min-width:640px){.fp{grid-template-columns:1fr auto;align-items:flex-start}.fp blockquote{order:1}.fp .lq{order:2;width:16rem}}
+@media(min-width:1024px){.vg{grid-template-columns:repeat(12,1fr)}.vg>:first-child{grid-column:span 5}.vg>:last-child{grid-column:span 7}}
+/* footer */
+#contact{padding:var(--section) var(--gutter) 0}
+.mail{margin-top:3rem;display:inline-flex;align-items:baseline;gap:.75rem;font-size:1.75rem;font-weight:600;letter-spacing:-.01em;word-break:break-all;transition:transform .34s ease-out,color .34s ease-out}
+.mail:hover{transform:translateX(14px);color:var(--accent)}.mail em{font-style:normal;color:var(--accent)}
+.fb{margin-top:var(--section);border-top:1px solid var(--line);padding:3rem 0;display:grid;gap:2.5rem}
+.fb .sig{font-size:3.25rem;line-height:1}
+.soc a{position:relative;display:inline-flex;align-items:center;font-size:1.0625rem;color:var(--muted);transition:color .3s}
+.soc a:before{content:"";height:1px;width:0;background:var(--accent);transition:width .3s}
+.soc a:hover{color:var(--foreground)}.soc a:hover:before{width:1.5rem;margin-right:.5rem}
+.copy{font-size:.8125rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+@media(min-width:640px){.mail{font-size:3.25rem;gap:1rem}}
+@media(min-width:1024px){.fb{grid-template-columns:repeat(12,1fr)}.fb>:nth-child(1){grid-column:span 6}.fb>:nth-child(2){grid-column:span 3}.fb>:nth-child(3){grid-column:span 3;text-align:right}}
+@media(prefers-reduced-motion:reduce){#pre{display:none}.mt{animation:none}.rv,.w>span,.lt{opacity:1!important;transform:none!important;transition:none!important}.fp p span{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="world" aria-hidden="true"></canvas>
+<div id="dim" aria-hidden="true"></div>
+<div id="stage" aria-hidden="true"><div class="sn"></div><div class="st"></div><div class="sc"></div><div class="sb"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+<div id="pre" aria-hidden="false"><div class="lb disp">Pavan U Pai</div><div class="ct disp"><span id="cn">0</span><i>%</i></div></div>
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState('insights');
+<header><nav class="top">
+  <a href="#top" class="logo"><span class="mono">PP</span><span class="lbl">Pavan U Pai</span></a>
+  <ul class="links" id="links"></ul>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav></header>
+<div id="menu"><ul id="mlinks"></ul></div>
 
-  // Posts written in first-person ("I", "My") based on your LinkedIn topics
-  const techPosts = [
-    {
-      id: "rn-workers",
-      title: "Multithreading in React Native with Web Workers",
-      tag: "Mobile Architecture & Performance",
-      summary: "How I offload heavy computational tasks off the JavaScript thread to achieve a silky smooth 60 FPS user experience.",
-      content: `When building high-performance React Native applications, the single-threaded JavaScript bridge often becomes a major bottleneck for heavy computations like image processing, complex JSON parsing, or cryptography.
+<main>
+<section id="top" class="">
+  <div class="hrow">
+    <h2 class="roles disp">
+      <span class="w blk"><span style="--d:200ms">Mobile</span></span>
+      <span class="w blk"><span style="--d:280ms">React Native</span></span>
+      <span class="w blk"><span style="--d:360ms">iOS &amp; Android</span></span>
+      <span class="w blk"><span style="--d:440ms">Bengaluru</span></span>
+    </h2>
+    <p class="hdesc rv" style="--d:400ms;--t:520ms">Senior mobile engineer building React Native apps for iOS and Android. Six-plus years shipping professionally, five-plus of them in React Native.</p>
+  </div>
+    <h1 class="name disp" id="name"><span class="l" data-d="0">Pavan</span><span class="l" data-d="240">Pai</span></h1>
+  <div class="cue rv" style="--d:900ms">Scroll to explore</div>
+</section>
 
-In my recent engineering deep dive, I implemented and benchmarked React Native Workers. By moving heavy data manipulation to a background thread, I prevented UI frame drops and ensured that gestures, animations, and user interactions remain completely fluid. 
+<section class="mq" aria-label="Skills"><div class="mt" id="mt"></div></section>
 
-Key Takeaways from My Benchmark:
-• Kept the JS Main Thread completely free for UI interactions.
-• Reduced frame drops by over 80% during background data processing.
-• Created a clean postMessage interface for asynchronous communication between threads.`
-    },
-    {
-      id: "code-splitting",
-      title: "Mastering Lazy Loading & Code Splitting for Frontend Scale",
-      tag: "Web Performance & Optimization",
-      summary: "My strategic approach to reducing initial bundle sizes by up to 60% using dynamic imports and smart suspense fallbacks.",
-      content: `Huge JavaScript bundles are the silent killers of user retention and Lighthouse performance scores. 
+<section id="story" class="sec"><div class="sg">
+  <div>
+    <div class="eyebrow">About</div>
+    <h2 class="h big n95 disp hd" style="max-width:16ch">Mobile apps, built to last.</h2>
+    <p class="lead rv" style="--t:520ms">I'm a senior mobile engineer based in Bengaluru, working across iOS and Android with React Native. I've been shipping professionally for six-plus years, from Vee Technologies to Accenture, where I'm a Senior Analyst. I also publish and maintain open source, including rn-zendesk on npm.</p>
+  </div>
+  <ul id="pr"></ul>
+</div></section>
 
-I wrote about my methodology for breaking down monolithic React/Next.js dynamic routes into demand-driven chunks. Instead of serving an all-in-one heavy bundle to the client, I leverage React.lazy(), Dynamic Imports, and route-level code splitting.
+<section id="ventures" class="sec">
+  <div class="vh"><div><div class="eyebrow">Experience</div>
+    <h2 class="h big n95 disp hd" style="max-width:14ch">Where I've shipped.</h2></div>
+    <div class="lbl">04 / Companies</div></div>
+  <ul class="vl" id="vl"></ul>
+</section>
 
-My Architecture Blueprint:
-1. Critical Path First: Rendering core viewport components immediately.
-2. Route-Based Chunking: Loading heavy pages (like analytics or dashboards) only when requested.
-3. Micro-Interaction Loading: Deferring modal dialogs and heavy libraries (like Chart.js or Three.js) until user hover or scroll trigger.`
-    },
-    {
-      id: "mobile-optimization",
-      title: "Optimizing Mobile Memory Footprints & Re-render Cycles",
-      tag: "React Native Deep Dive",
-      summary: "Practical techniques I use to debug memory leaks, optimize FlatLists, and eliminate unnecessary re-renders.",
-      content: `Performance isn't an afterthought; it's a core architectural requirement. In my work with React Native apps, I frequently audit component lifecycle behaviors to eliminate wasted renders.
+<section id="impact" class="sec">
+  <div class="eyebrow">By The Numbers</div>
+  <h2 class="h disp hd">Years, measured.</h2>
+  <dl class="im" id="im"></dl>
+</section>
 
-By leveraging memoization (useMemo, useCallback) with surgical precision, profiling with React DevTools, and configuring FlatList windowSize & getItemLayout props, I transformed laggy scrollviews into native-speed experiences.`
-    }
-  ];
-
-  const githubProjects = [
-    {
-      name: "React Native Performance Suite",
-      description: "Custom hooks and web worker wrappers designed to offload computational tasks off the main JS thread.",
-      tech: ["React Native", "TypeScript", "Web Workers"],
-      stars: 12
-    },
-    {
-      name: "Code-Splitting Architecture Starter",
-      description: "A production-ready React boilerplate optimized for sub-second page loads, Lighthouse 95+ scores, and lazy routes.",
-      tech: ["React", "Vite", "Tailwind CSS"],
-      stars: 8
-    },
-    {
-      name: "Mobile State Profiler",
-      description: "A developer utility for tracking component re-renders and memory allocations in real-time.",
-      tech: ["JavaScript", "React Native", "DevTools"],
-      stars: 15
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-[#050508] text-gray-100 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden">
-      
-      {/* GLOWING BACKGROUND ORBS */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-15%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px]" />
-        <div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[160px]" />
-      </div>
-
-      {/* NAVBAR */}
-      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#050508]/80 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-              <Terminal className="w-5 h-5 text-black" />
-            </div>
-            <div>
-              <span className="font-bold tracking-wider text-base bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent block">
-                PAVAN KUMAR
-              </span>
-              <span className="text-[10px] text-cyan-400 font-mono tracking-widest block uppercase">
-                @pavankumarupai37
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <a 
-              href="https://github.com/pavankumarupai37" 
-              target="_blank" 
-              rel="noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white transition-all flex items-center gap-2 text-xs font-semibold"
-            >
-              <Github className="w-4 h-4" />
-              <span className="hidden sm:inline">GitHub Profile</span>
-            </a>
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
-              rel="noreferrer"
-              className="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/20"
-            >
-              <Linkedin className="w-4 h-4" />
-              <span>Connect</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      {/* HERO SECTION */}
-      <header className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-24 flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono uppercase tracking-widest mb-8">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Software Engineer & Mobile Architect</span>
-        </div>
-
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight max-w-4xl leading-[1.15] mb-6">
-          Hi, I’m <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Pavan Kumar</span>. <br />
-          I Build Scalable Apps & Optimations.
-        </h1>
-
-        <p className="text-base md:text-lg text-gray-400 max-w-2xl mb-10 font-light leading-relaxed">
-          I specialize in <strong className="text-gray-200 font-medium">React Native Workers</strong>, <strong className="text-gray-200 font-medium">Lazy Loading</strong>, <strong className="text-gray-200 font-medium">Code Splitting</strong>, and crafting high-performance mobile and web solutions.
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-4">
-          <a 
-            href="#insights" 
-            className="px-6 py-3.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Read My Insights</span>
-          </a>
-          <a 
-            href="https://github.com/pavankumarupai37" 
-            target="_blank" 
-            rel="noreferrer"
-            className="px-6 py-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
-          >
-            <Code2 className="w-4 h-4" />
-            <span>View Repositories</span>
-          </a>
-        </div>
-      </header>
-
-      {/* FEATURED STATS / CHIPS */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 pb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-400">
-              <Smartphone className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-lg font-bold text-white">React Native</div>
-              <div className="text-xs text-gray-400">Workers & Thread Offloading</div>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-purple-500/10 text-purple-400">
-              <Zap className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-lg font-bold text-white">Web Performance</div>
-              <div className="text-xs text-gray-400">Lazy Loading & Splitting</div>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400">
-              <Github className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-lg font-bold text-white">Open Source</div>
-              <div className="text-xs text-gray-400">@pavankumarupai37</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INSIGHTS / LINKEDIN POSTS SECTION (1st Person Explanations) */}
-      <section id="insights" className="relative z-10 max-w-7xl mx-auto px-6 py-20 border-t border-white/10">
-        <div className="mb-12">
-          <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest block mb-2">Technical Publications</span>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">How I Think & Build Solutions</h2>
-          <p className="text-gray-400 text-sm mt-2">Here are my detailed architectural thoughts and breakdown of key topics I've shared with the community.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {techPosts.map((post) => (
-            <article 
-              key={post.id}
-              className="p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent border border-white/10 hover:border-cyan-500/40 transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    {post.tag}
-                  </span>
-                  <Share2 className="w-4 h-4 text-gray-500" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3">{post.title}</h3>
-                <p className="text-xs text-gray-300 font-light mb-4 leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
-                  "{post.summary}"
-                </p>
-                <div className="text-xs text-gray-400 space-y-2 whitespace-pre-line font-sans mb-6">
-                  {post.content}
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                <span className="text-[10px] text-gray-500 font-mono">By Pavan Kumar</span>
-                <span className="text-xs text-cyan-400 flex items-center gap-1 font-semibold hover:underline cursor-pointer">
-                  <span>Read full thought</span>
-                  <ChevronRight className="w-3 h-3" />
-                </span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* GITHUB REPOSITORIES SECTION */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 py-20 border-t border-white/10">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
-          <div>
-            <span className="text-cyan-400 text-xs font-mono uppercase tracking-widest block mb-2">GitHub Repositories</span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Code & Architectural Work</h2>
-          </div>
-          <a 
-            href="https://github.com/pavankumarupai37" 
-            target="_blank" 
-            rel="noreferrer"
-            className="text-xs text-cyan-400 font-semibold uppercase tracking-wider flex items-center gap-2 hover:underline"
-          >
-            <span>Explore Github (@pavankumarupai37)</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {githubProjects.map((repo, idx) => (
-            <div 
-              key={idx}
-              className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-purple-500/40 transition-all flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2 text-white font-bold text-base group-hover:text-cyan-300 transition-colors">
-                    <Code2 className="w-4 h-4 text-cyan-400" />
-                    <span>{repo.name}</span>
-                  </div>
-                </div>
-                <p className="text-xs text-gray-400 font-light mb-6 leading-relaxed">
-                  {repo.description}
-                </p>
-              </div>
-
-              <div>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {repo.tech.map((t, i) => (
-                    <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/5">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <a 
-                  href="https://github.com/pavankumarupai37" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="w-full py-2 rounded-xl bg-white/5 hover:bg-cyan-500 hover:text-black font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
-                >
-                  <span>View Code</span>
-                  <ChevronRight className="w-3 h-3" />
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="relative z-10 border-t border-white/10 bg-[#030305] py-12">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <div className="font-bold text-sm text-white">PAVAN KUMAR</div>
-            <p className="text-xs text-gray-500 mt-1">Specializing in React Native, Web Workers, & Performance Optimization.</p>
-          </div>
-
-          <div className="flex items-center gap-6 text-gray-400">
-            <a href="https://github.com/pavankumarupai37" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </a>
-          </div>
-        </div>
-      </footer>
-
+<section id="voices" class="sec">
+  <div class="eyebrow">Writing</div>
+  <h2 class="h disp hd">What I write.</h2>
+  <div class="vg">
+    <ul id="vs"></ul>
+    <div class="fp">
+      <blockquote><p id="vq"></p><footer id="vf"></footer></blockquote>
     </div>
-  );
+  </div>
+</section>
+</main>
+
+<footer id="contact">
+  <div class="eyebrow">Let's Build</div>
+  <h2 class="h big xl n95 disp hd" style="max-width:18ch">Have a mobile app to build?</h2>
+  <p class="lead rv" style="--t:520ms">Let's talk about it. The best place to find my work is on GitHub.</p>
+  <a class="mail" href="https://github.com/pavankumarupai37" target="_blank" rel="noreferrer noopener">github.com/pavankumarupai37 <em>↗</em></a>
+  <div class="fb">
+    <div><p class="sig disp">Pavan U Pai</p><p class="lbl" style="margin-top:1rem">Senior Mobile Engineer · Bengaluru</p></div>
+    <nav aria-label="Social"><ul class="soc">
+      <li><a href="https://github.com/pavankumarupai37" target="_blank" rel="noreferrer noopener">GitHub</a></li>
+      <li><a href="https://www.npmjs.com/package/rn-zendesk" target="_blank" rel="noreferrer noopener">rn-zendesk on npm</a></li>
+      <li><a href="https://www.linkedin.com" target="_blank" rel="noreferrer noopener">LinkedIn</a></li></ul></nav>
+    <p class="copy">© 2026 Pavan U Pai. All rights reserved.</p>
+  </div>
+</footer>
+
+<script type="module">
+import Lenis from "lenis";
+const lenis = new Lenis({ smoothWheel: true });
+window.lenis = lenis;
+if (!window.__preDone) lenis.stop();
+(function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(0);
+document.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  const el = a.getAttribute("href") === "#top" ? 0 : document.querySelector(a.getAttribute("href"));
+  if (el === null) return; e.preventDefault(); lenis.scrollTo(el);
+});
+</script>
+<script>
+const B = "https://api.getlayers.ai/storage/v1/object/public/public/assets/marcus-vane-6799bd1fb6/";
+const $ = s => document.querySelector(s);
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* adaptive grid */
+(function(){const FB=16,BW=1920,C=.6666;
+  function f(){const w=innerWidth,r=((BW-w)/BW)*100*C,s=FB-(FB*r)/100;
+    if(s>FB)document.documentElement.style.fontSize=s+"px";else document.documentElement.style.removeProperty("font-size");}
+  f();addEventListener("resize",f);})();
+
+/* data */
+const NAV=[["Story","#story"],["Ventures","#ventures"],["Impact","#impact"],["Voices","#voices"],["Contact","#contact"]];
+$("#links").innerHTML=NAV.map(n=>`<li><a href="${n[1]}">${n[0]}</a></li>`).join("");
+$("#mlinks").innerHTML=NAV.map((n,i)=>`<li><a class="disp" style="--i:${i}" href="${n[1]}">${n[0]}</a></li>`).join("");
+const burger=$("#burger"),menu=$("#menu");
+function toggleMenu(o){burger.classList.toggle("open",o);menu.classList.toggle("open",o);
+  if(window.lenis&&window.__preDone)o?lenis.stop():lenis.start();}
+burger.onclick=()=>toggleMenu(!menu.classList.contains("open"));
+menu.addEventListener("click",e=>{if(e.target.closest("a"))toggleMenu(false)});
+
+const PR=[["React Native workers","Moving heavy work off the main thread so the interface stays responsive."],
+["Lazy loading & code splitting","Loading only what a screen needs, when it needs it, to keep startup fast."],
+["rn-zendesk","A React Native Zendesk package I published to npm for the community."],
+["Open source on GitHub","My repositories live at github.com/pavankumarupai37."]];
+$("#pr").innerHTML=PR.map((p,i)=>`<li class="pr rv" style="--d:${i*90}ms;--t:560ms"><b>0${i+1}</b><div><h3>${p[0]}</h3><p>${p[1]}</p></div></li>`).join("");
+
+const VEN=[["Accenture","Senior Analyst","2024","Present"],["CAE","Mobile engineering","2022","2024"],["Flexsin Technologies","Mobile engineering","2021","2022"],["Vee Technologies","Mobile engineering","2020","2021"]];
+$("#vl").innerHTML=VEN.map((v,i)=>`<li class="rv vc${i%2?" od":""}" style="--y:60px;--t:620ms;--d:${i%2?120:0}ms"><article>
+<div class="vr" style="margin-top:0"><div><h3 style="font-size:1.75rem;line-height:1.15;font-weight:600;letter-spacing:-.01em">${v[0]}</h3></div>
+<div class="rt">${v[2]} — ${v[3]}</div></div><p class="cat">${v[1]}</p></article></li>`).join("");
+
+const ST=[["6+","Years of professional experience"],["5+","Years building in React Native"],["4","Companies across my career"],["1","Public npm package published"]];
+$("#im").innerHTML=ST.map((s,i)=>`<div class="st rv" style="--d:${i*110}ms"><dd class="disp">${s[0]}</dd><dt>${s[1]}</dt></div>`).join("");
+
+const VO=[["“I move heavy work off the JavaScript thread with workers, so the interface stays smooth while the real work happens elsewhere.”","React Native workers","LinkedIn post"],
+["“I load only what a screen needs, exactly when it needs it. Lazy loading and code splitting keep startup fast and bundles lean.”","Lazy loading & code splitting","LinkedIn post"]];
+$("#vs").innerHTML=VO.map((v,i)=>`<li><button class="vb" data-i="${i}"><i>0${i+1}</i><span class="vn"><h3>${v[1]}</h3><div>${v[2]}</div></span><u></u></button></li>`).join("");
+let active=-1;
+function setVoice(i){ if(i===active)return; active=i;
+  document.querySelectorAll(".vb").forEach((b,j)=>b.classList.toggle("on",j===i));
+  $("#vq").innerHTML=VO[i][0].split(" ").map((w,k)=>`<span style="--i:${k}">${w}</span>`).join(" ");
+  $("#vf").textContent=VO[i][1]+" — "+VO[i][2];
+  const im=$("#vp img"); if(im){im.src=B+"voices/voice-0"+(i+1)+".webp";im.alt=VO[i][1];}
 }
+document.querySelectorAll(".vb").forEach(b=>{const i=+b.dataset.i;
+  ["mouseenter","focus","click"].forEach(ev=>b.addEventListener(ev,()=>setVoice(i)));});
+
+/* skills */
+const IC={
+rn:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+ios:'<path d="M12 8c-2-1.5-5-.5-6 2-1.3 3.2.5 8 3 9.5 1 .6 2 0 3 0s2 .6 3 0c1.5-.9 2.8-3 3.3-5-2-.8-3-2.5-3-4.3 0-1.4.7-2.5 1.7-3.2-1.2-1.3-3.3-1.4-4.5-.5z"/><path d="M12 7c0-2 1.2-3.5 3-4"/>',
+and:'<path d="M5 17v-6a7 7 0 0 1 14 0v6a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/><path d="M8 4l1.5 2M16 4l-1.5 2"/><circle cx="9.5" cy="11" r=".6"/><circle cx="14.5" cy="11" r=".6"/>',
+cpu:'<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
+zap:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+split:'<path d="M12 21v-8M12 13L5 6M12 13l7-7"/><path d="M5 9V6h3M16 6h3v3"/>',
+zen:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+pkg:'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
+git:'<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10M18 11c0 4-6 3-12 6"/>'};
+const SK=[["React Native","Mobile framework","rn"],["iOS","Platform","ios"],["Android","Platform","and"],
+["React Native workers","Performance","cpu"],["Lazy loading","Performance","zap"],["Code splitting","Performance","split"],
+["Zendesk (rn-zendesk)","Integration","zen"],["npm packages","Open source","pkg"],["GitHub","Open source","git"]];
+$("#mt").innerHTML=[...SK,...SK].map(k=>`<span class="disp"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[k[2]]}</svg>${k[0]}</span>`).join("");
+
+/* liquid image */
+function spring(T,F,cb){let x=0,v=0,t=0,run=false,last;
+  function tick(n){const dt=Math.min((n-last)/1000,.032);last=n;v+=(-T*(x-t)-F*v)*dt;x+=v*dt;cb(x);
+    if(Math.abs(x-t)<.001&&Math.abs(v)<.001){x=t;cb(x);run=false;return}requestAnimationFrame(tick)}
+  return to=>{t=to;if(!run){run=true;last=performance.now();requestAnimationFrame(tick)}}}
+let fid=0;
+function liquid(fig){
+  const id="lq"+(++fid),S=+fig.dataset.s,bare=fig.classList.contains("bare");
+  const media=fig.dataset.video?`<video autoplay muted loop playsinline preload="auto" poster="${B}hero/portrait.webp" src="${B}hero/hero.mp4"></video>`
+    :`<img src="${fig.dataset.src?B+fig.dataset.src:""}" alt="${fig.dataset.alt||""}">`;
+  fig.setAttribute("role","img");
+  fig.innerHTML=`<svg style="width:0;height:0;position:absolute"><filter id="${id}"><feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="2" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1" xChannelSelector="R" yChannelSelector="G"/></filter></svg>${media}`
+    +(bare?"":`<div class="ov veil"></div><div class="ov glow"></div><div class="ov vig"></div>`);
+  fig.querySelector("img,video").style.filter=`url(#${id})`;
+  const dm=fig.querySelector("feDisplacementMap"),tb=fig.querySelector("feTurbulence");
+  const sp=spring(140,13,x=>{dm.setAttribute("scale",1+x*(S-1));tb.setAttribute("baseFrequency",.009+x*.013)});
+  if(matchMedia("(hover:hover) and (min-width:769px)").matches){
+    fig.addEventListener("mouseenter",()=>{sp(1);fig.classList.add("hv")});
+    fig.addEventListener("mouseleave",()=>{sp(0);fig.classList.remove("hv")});}
+}
+document.querySelectorAll(".lq").forEach(liquid);
+setVoice(0);
+
+/* hero name letters + heading word split */
+document.querySelectorAll("#name .l").forEach(l=>{const d=+l.dataset.d;
+  l.innerHTML=[...l.textContent].map((c,i)=>`<span class="lt" style="--d:${d+i*52}ms">${c}</span>`).join("");});
+document.querySelectorAll(".hd").forEach(h=>{
+  h.innerHTML=h.textContent.split(" ").map(w=>`<span class="w"><span>${w}</span></span>`).join(" ");});
+
+/* in-view */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+  const el=e.target;
+  if(el.classList.contains("hd")){let top=-1,line=-1;
+    el.querySelectorAll(".w").forEach(w=>{if(w.offsetTop!==top){top=w.offsetTop;line++}w.firstChild.style.setProperty("--d",line*90+"ms")});}
+  el.classList.add("in");io.unobserve(el);}));
+document.querySelectorAll(".rv:not(.hdesc):not(.cue),.hd").forEach(el=>io.observe(el));
+
+/* preloader + hero sequence */
+const pre=$("#pre");
+scrollTo(0,0);
+function finish(){window.__preDone=true;pre.setAttribute("aria-hidden","true");pre.style.pointerEvents="none";
+  if(window.lenis)lenis.start();document.documentElement.classList.remove("lenis-stopped");}
+if(RM){pre.remove();finish();$("#top").classList.add("go");}
+else{
+  const t0=performance.now(),cn=$("#cn");
+  document.documentElement.style.overflow="hidden";
+  (function tick(n){const p=Math.min((n-t0)/2000,1);cn.textContent=Math.round(p*100);
+    if(p<1)return requestAnimationFrame(tick);
+    pre.classList.add("fade");
+    setTimeout(()=>{pre.classList.add("out");
+      setTimeout(()=>{document.documentElement.style.overflow="";finish();pre.style.display="none"},650)},200);
+  })(t0);
+  setTimeout(()=>$("#top").classList.add("go"),2500);
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* Three.js scroll scene: a live walkthrough of how an app gets built, Idea -> Design -> Code -> Build -> Test -> Ship */
+(function(){
+if(!window.THREE)return;
+const cv=document.getElementById("world");
+const small=matchMedia("(max-width:768px)").matches,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(!CanvasRenderingContext2D.prototype.roundRect)CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){r=Math.min(r,w/2,h/2);this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath()};
+let R;try{R=new THREE.WebGLRenderer({canvas:cv,antialias:!small,powerPreference:"high-performance"});}catch(e){cv.remove();return}
+R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.setClearColor(0x08080a,1);
+const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x08080a,.012);
+const cam=new THREE.PerspectiveCamera(50,1,.1,300);
+scene.add(new THREE.AmbientLight(0x8a8a9a,.7));
+const cl=new THREE.PointLight(0xffe0d0,1.2,40);scene.add(cl);
+const SP=26,S=7,TAU=Math.PI*2;
+const STAGES=[["Idea","Start with the problem"],["Design","Shape the experience"],["Code","Write it in React Native"],["Build","Compile for iOS & Android"],["Test","Test until it's solid"],["Ship","Put it in people's hands"],["Download","Installed in seconds"]];
+const MONO="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",SANS="Onest,Inter,system-ui,sans-serif",DISP="Anton,Impact,sans-serif";
+const AC="#ff3b1d",FG="#f3f1ea",MU="#807f78",GR="#3ddc84",LN="rgba(243,241,234,.14)";
+const dispo=[],track=o=>(dispo.push(o),o);
+const stations=Array.from({length:S},(_,i)=>{const g=new THREE.Group();g.position.z=-i*SP;scene.add(g);return g});
+const ALLP=[];
+const rr=(c,x,y,w,h,r)=>{c.beginPath();c.roundRect(x,y,w,h,r)};
+const tx=(c,t,x,y,f,col,al)=>{c.font=f;c.fillStyle=col;c.textAlign=al||"left";c.fillText(t,x,y);c.textAlign="left"};
+function panel(st,w,h,cw,ch,draw,x,y,z,ry,fps,noEdge){
+  const cn=document.createElement("canvas");cn.width=cw;cn.height=ch;const c=cn.getContext("2d");
+  const tex=track(new THREE.CanvasTexture(cn));tex.minFilter=THREE.LinearFilter;tex.anisotropy=4;
+  const g=track(new THREE.PlaneGeometry(w,h)),m=new THREE.Mesh(g,track(new THREE.MeshBasicMaterial({map:tex,transparent:true})));
+  m.position.set(x,y,z);m.rotation.y=ry||0;
+  if(!noEdge){m.add(new THREE.LineSegments(track(new THREE.EdgesGeometry(g)),track(new THREE.LineBasicMaterial({color:0xff3b1d,transparent:true,opacity:.55}))))}
+  stations[st].add(m);
+  const o={st,c,cw,ch,tex,draw,acc:0,fps:fps||0};ALLP.push(o);draw(c,cw,ch,4);tex.needsUpdate=true;return m}
+function chrome(c,w,h,title){c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);c.fillStyle="#17171c";c.fillRect(0,0,w,46);
+  ["#ff5f57","#febc2e","#28c840"].forEach((k,i)=>{c.fillStyle=k;c.beginPath();c.arc(26+i*24,23,7,0,7);c.fill()});
+  tx(c,title,w/2,30,"500 20px "+MONO,MU,"center")}
+function phoneUI(c,x,y,pw,ph,n){ /* tiny app screen with n feed cards */
+  c.strokeStyle="rgba(243,241,234,.5)";c.lineWidth=3;rr(c,x,y,pw,ph,28);c.stroke();
+  tx(c,"Feed",x+22,y+52,"600 26px "+SANS,FG);
+  for(let k=0;k<5;k++){const a=k<n?1:.0;if(!a)continue;const cy=y+78+k*((ph-100)/5);
+    c.fillStyle="rgba(243,241,234,.09)";rr(c,x+18,cy,pw-36,(ph-100)/5-12,12);c.fill();
+    c.fillStyle=k%2?"#ff6a3d":AC;c.beginPath();c.arc(x+44,cy+((ph-100)/5-12)/2,13,0,7);c.fill();
+    c.fillStyle="rgba(243,241,234,.55)";c.fillRect(x+68,cy+14,pw-130,8);c.fillStyle="rgba(243,241,234,.25)";c.fillRect(x+68,cy+30,pw-170,7)}}
+
+/* ============ 01 IDEA ============ */
+const NOTES=[["Problem","What hurts today?"],["Users","Who is it for?"],["Core feature","One thing, done well"],["MVP","Smallest useful release"],["Metrics","How we'll know it works"],["Platforms","iOS + Android"]];
+const NP=[[-7,2.5,-3,.35],[7,3,-3,-.35],[-9.5,-1,2,.5],[9.5,-.5,2,-.5],[-4,5.4,-8,.15],[4.5,5.6,-8,-.15]];
+const notes=NOTES.map((n,i)=>{const m=panel(0,3.6,2.4,288,192,(c,w,h)=>{c.fillStyle="#15151a";c.fillRect(0,0,w,h);c.fillStyle=AC;c.fillRect(0,0,6,h);
+  tx(c,"TODO",22,36,"500 15px "+MONO,AC);tx(c,n[0],22,92,"600 32px "+SANS,FG);tx(c,n[1],22,128,"400 18px "+SANS,MU)},NP[i][0],NP[i][1],NP[i][2],NP[i][3]);
+  m.userData={y:NP[i][1],p:i*1.3};return m});
+
+/* ============ 02 DESIGN ============ */
+panel(1,11,6.9,1024,640,(c,w,h,t)=>{
+  c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);c.fillStyle="rgba(243,241,234,.09)";
+  for(let x=24;x<w;x+=32)for(let y=24;y<h;y+=32)c.fillRect(x,y,2,2);
+  tx(c,"Artboard · iPhone",28,40,"500 20px "+MONO,MU);
+  const pw=270,ph=560,px=(w-pw)/2,py=(h-ph)/2+10,p=Math.min((t%11)/9,1);
+  c.strokeStyle="rgba(243,241,234,.5)";c.lineWidth=3;rr(c,px,py,pw,ph,34);c.stroke();
+  const E=[[20,50,pw-40,36,"bar"],[20,100,pw-40,150,"hero"],[20,266,pw-40,70,"card"],[20,346,pw-40,70,"card"],[20,430,pw-40,46,"btn"],[30,504,pw-60,26,"nav"]];
+  const sel=Math.min(Math.floor(p*E.length),E.length-1);
+  E.forEach((e,i)=>{const a=Math.min(Math.max(p*E.length-i,0),1);if(a<=0)return;const x=px+e[0],y=py+e[1],ew=e[2],eh=e[3];c.globalAlpha=a;
+    if(e[4]==="bar"){c.fillStyle="rgba(243,241,234,.16)";rr(c,x,y,ew,eh,10);c.fill()}
+    else if(e[4]==="hero"){c.strokeStyle="rgba(243,241,234,.4)";c.lineWidth=2;rr(c,x,y,ew,eh,14);c.stroke();c.beginPath();c.moveTo(x,y+eh);c.lineTo(x+ew*.4,y+eh*.35);c.lineTo(x+ew*.65,y+eh*.7);c.lineTo(x+ew*.8,y+eh*.5);c.lineTo(x+ew,y+eh);c.stroke();c.fillStyle=AC;c.beginPath();c.arc(x+ew*.78,y+eh*.25,12,0,7);c.fill()}
+    else if(e[4]==="card"){c.strokeStyle="rgba(243,241,234,.3)";c.lineWidth=2;rr(c,x,y,ew,eh,12);c.stroke();c.fillStyle="rgba(243,241,234,.3)";c.beginPath();c.arc(x+30,y+eh/2,14,0,7);c.fill();c.fillRect(x+56,y+20,ew-90,9);c.fillRect(x+56,y+40,ew-130,8)}
+    else if(e[4]==="btn"){c.fillStyle=AC;rr(c,x,y,ew,eh,23);c.fill();tx(c,"Get started",x+ew/2,y+30,"600 20px "+SANS,"#fff","center")}
+    else{for(let k=0;k<4;k++){c.fillStyle=k===0?AC:"rgba(243,241,234,.4)";c.beginPath();c.arc(x+20+k*((ew-40)/3),y+13,7,0,7);c.fill()}}
+    c.globalAlpha=1});
+  const e=E[sel],bx=px+e[0]-6,by=py+e[1]-6,bw=e[2]+12,bh=e[3]+12;
+  c.strokeStyle=AC;c.lineWidth=2;c.strokeRect(bx,by,bw,bh);c.fillStyle="#fff";[[bx,by],[bx+bw,by],[bx,by+bh],[bx+bw,by+bh]].forEach(q=>c.fillRect(q[0]-5,q[1]-5,10,10));
+  c.fillStyle=AC;rr(c,bx,by-30,Math.min(150,bw),24,6);c.fill();tx(c,Math.round(e[2])+" × "+Math.round(e[3]),bx+8,by-12,"500 15px "+MONO,"#fff");
+  c.fillStyle="#fff";c.beginPath();c.moveTo(bx+bw+6,by+bh+4);c.lineTo(bx+bw+6,by+bh+30);c.lineTo(bx+bw+14,by+bh+22);c.lineTo(bx+bw+26,by+bh+22);c.closePath();c.fill();
+},0,1.6,-2,0,16);
+panel(1,3.2,5.4,256,432,(c,w,h,t)=>{c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);tx(c,"COMPONENTS",20,38,"500 16px "+MONO,MU);
+  ["Button","Card","List item","Header","Tab bar","Input"].forEach((n,i)=>{const y=60+i*58,on=Math.floor(t*.6)%6===i;
+    c.fillStyle=on?"rgba(255,59,29,.16)":"rgba(243,241,234,.05)";rr(c,16,y,w-32,46,10);c.fill();
+    c.strokeStyle=on?AC:"rgba(243,241,234,.3)";c.lineWidth=2;rr(c,30,y+13,26,20,5);c.stroke();tx(c,n,70,y+31,"500 20px "+SANS,on?FG:MU)})},-8.2,0,0,.4,6);
+panel(1,3.2,5.4,256,432,(c,w,h)=>{c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);tx(c,"STYLES",20,38,"500 16px "+MONO,MU);
+  [["#ff3b1d","Accent"],["#f3f1ea","Text"],["#807f78","Muted"],["#17171b","Surface"]].forEach((k,i)=>{const y=60+i*60;c.fillStyle=k[0];rr(c,20,y,44,44,10);c.fill();c.strokeStyle=LN;c.stroke();tx(c,k[1],78,y+20,"600 19px "+SANS,FG);tx(c,k[0],78,y+40,"400 15px "+MONO,MU)});
+  tx(c,"Aa",20,370,"72px "+DISP,FG);tx(c,"Display · Anton",20,396,"400 15px "+MONO,MU);tx(c,"Body · Onest",20,418,"400 15px "+MONO,MU)},8.2,0,0,-.4);
+
+/* ============ 03 CODE ============ */
+const CODE=["import { FlatList } from 'react-native';","import { Card } from './Card';","","export function Feed({ items }) {","  return (","    <FlatList","      data={items}","      renderItem={Card}","      initialNumToRender={6}","    />","  );","}"];
+const TOT=CODE.join("\n").length;
+const RX=/(import|export|function|return|from)\b|('[^']*')|(<\/?[A-Za-z]+|\/>|>)|([A-Za-z]+(?==))|([{}();,=])|(\s+|[^\s{}();,=<>']+)/g;
+const COL=["#ff6a3d","#8fd694","#f3f1ea","#ffd479","#807f78","#cfcfd6"];
+const TOK=CODE.map(l=>{const out=[];let m;RX.lastIndex=0;while((m=RX.exec(l))){let k=5;for(let g=1;g<=6;g++)if(m[g]!==undefined){k=g-1;break}out.push([m[0],COL[k]])}return out});
+const typedAt=t=>Math.floor(Math.min((t%15)/10,1)*TOT);
+panel(2,12,7.5,1024,640,(c,w,h,t)=>{chrome(c,w,h,"Feed.tsx — editor");const typed=typedAt(t);let used=0,lx=100,ly=110;
+  c.font="500 26px "+MONO;
+  for(let i=0;i<CODE.length;i++){const y=112+i*38;tx(c,String(i+1),70,y,"500 22px "+MONO,"#4a4a52","right");c.font="500 26px "+MONO;let x=100;
+    for(const [txt,col] of TOK[i]){const take=Math.min(txt.length,Math.max(typed-used,0));
+      if(take>0){c.fillStyle=col;const s=txt.slice(0,take);c.fillText(s,x,y);x+=c.measureText(s).width;lx=x;ly=y}used+=txt.length}used+=1}
+  if(Math.floor(t*2)%2===0){c.fillStyle=AC;c.fillRect(lx+3,ly-24,3,32)}},0,1.5,-2,0,20);
+panel(2,3.2,5.2,256,416,(c,w,h)=>{c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);tx(c,"EXPLORER",20,38,"500 16px "+MONO,MU);
+  [["▾ src",0,0],["App.tsx",1,0],["Feed.tsx",1,1],["Card.tsx",1,0],["api.ts",1,0],["theme.ts",1,0]].forEach((f,i)=>{const y=62+i*52;
+    if(f[2]){c.fillStyle="rgba(255,59,29,.16)";rr(c,10,y-6,w-20,42,8);c.fill()}tx(c,f[0],24+f[1]*22,y+22,"500 20px "+MONO,f[2]?FG:MU)})},-8.4,0,0,.4);
+panel(2,3.4,6.4,272,512,(c,w,h,t)=>{c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);tx(c,"LIVE PREVIEW",20,38,"500 16px "+MONO,MU);
+  c.fillStyle=GR;c.beginPath();c.arc(w-30,32,6,0,7);c.fill();phoneUI(c,26,60,w-52,h-90,Math.floor(Math.min((t%15)/10,1)*5.2))},8.4,0,0,-.4,12);
+
+/* ============ 04 BUILD ============ */
+const TL=[["$ npx react-native run-ios --release",FG,0],["› Bundling JavaScript   ▰▰▰▰▰▰▰▰▰▰ 100%",MU,1.4],["› iOS      compiling…  ✓ Build succeeded",GR,3.2],["$ ./gradlew assembleRelease",FG,4.6],["› Android  compiling…  ✓ Build succeeded",GR,6.6],["› Signing & archiving…",MU,8.2],["✓ app.ipa · app.aab ready","#ff6a3d",9.6]];
+panel(3,11,6,1024,512,(c,w,h,t)=>{chrome(c,w,h,"terminal — build");const T=t%13;
+  TL.forEach((l,i)=>{if(T<l[2])return;const y=96+i*46,last=i===TL.length-1||T<TL[i+1][2];
+    tx(c,l[0]+(last&&i<TL.length-1?" "+"⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"[Math.floor(T*12)%10]:""),30,y,"500 24px "+MONO,l[1])});
+  c.fillStyle="rgba(243,241,234,.1)";rr(c,30,h-52,w-60,12,6);c.fill();c.fillStyle=AC;rr(c,30,h-52,Math.max(12,(w-60)*Math.min(T/10.6,1)),12,6);c.fill()},0,1.7,-2,0,20);
+const gm=track(new THREE.MeshStandardMaterial({color:0xff3b1d,metalness:.4,roughness:.5,flatShading:true}));
+const gear1=new THREE.Mesh(track(new THREE.TorusGeometry(1.5,.5,8,10)),gm),gear2=new THREE.Mesh(track(new THREE.TorusGeometry(1,.38,8,8)),gm);
+gear1.position.set(-9,1.5,-4);gear2.position.set(-6.6,-.6,-4);stations[3].add(gear1,gear2);
+const belt=new THREE.Mesh(track(new THREE.BoxGeometry(17,.3,2.2)),track(new THREE.MeshStandardMaterial({color:0x1a1a20,roughness:.8})));belt.position.set(0,-2,4);stations[3].add(belt);
+const cubeG=track(new THREE.BoxGeometry(1,1,1)),cubes=[];
+for(let i=0;i<6;i++){const m=new THREE.Mesh(cubeG,track(new THREE.MeshStandardMaterial({color:i%2?0x3ddc84:0xe8e6df,roughness:.5})));m.position.set(0,-1.35,4);stations[3].add(m);cubes.push(m)}
+
+/* ============ 05 TEST ============ */
+const TESTS=["renders the feed","handles slow network","works offline","login flow","60fps scrolling","accessibility labels"];
+panel(4,10,7,960,672,(c,w,h,t)=>{chrome(c,w,h,"test suite");const T=t%12;let pass=0;
+  TESTS.forEach((n,i)=>{const y=70+i*84,st=i*1.5,done=T>st+1;if(done)pass++;
+    c.strokeStyle=LN;c.lineWidth=1;c.beginPath();c.moveTo(30,y+70);c.lineTo(w-30,y+70);c.stroke();
+    if(done){c.fillStyle=GR;c.beginPath();c.arc(56,y+34,16,0,7);c.fill();c.strokeStyle="#08080a";c.lineWidth=4;c.lineCap="round";c.beginPath();c.moveTo(48,y+34);c.lineTo(54,y+41);c.lineTo(65,y+27);c.stroke()}
+    else if(T>st){c.strokeStyle=AC;c.lineWidth=4;c.beginPath();c.arc(56,y+34,15,T*8,T*8+4.2);c.stroke()}
+    else{c.strokeStyle="rgba(243,241,234,.3)";c.lineWidth=2;c.beginPath();c.arc(56,y+34,15,0,7);c.stroke()}
+    tx(c,n,92,y+42,"500 28px "+SANS,done?FG:MU);if(done)tx(c,(8+i*5)+" ms",w-40,y+42,"500 22px "+MONO,MU,"right")});
+  tx(c,pass+" / 6 passed",30,h-34,"600 30px "+SANS,pass===6?GR:FG);c.fillStyle="rgba(243,241,234,.1)";rr(c,w-330,h-52,300,12,6);c.fill();c.fillStyle=GR;rr(c,w-330,h-52,Math.max(12,300*pass/6),12,6);c.fill()},0,1.7,-2,0,20);
+const bugG=track(new THREE.OctahedronGeometry(.4)),bugM=track(new THREE.MeshStandardMaterial({color:0xff3b1d,emissive:0x7a1608,flatShading:true})),bugs=[];
+for(let i=0;i<6;i++){const m=new THREE.Mesh(bugG,bugM);stations[4].add(m);bugs.push(m)}
+
+/* ============ 06 SHIP ============ */
+panel(5,9,5.5,864,528,(c,w,h,t)=>{chrome(c,w,h,"release — v1.0.0");const T=t%11,a=Math.min(T/3.2,1),b=Math.min(Math.max((T-1.2)/3.2,0),1),live=T>5;
+  [["App Store Connect",a],["Google Play Console",b]].forEach((r,i)=>{const y=100+i*96;tx(c,r[0],40,y,"600 28px "+SANS,FG);tx(c,Math.round(r[1]*100)+"%",w-40,y,"500 24px "+MONO,MU,"right");
+    c.fillStyle="rgba(243,241,234,.1)";rr(c,40,y+18,w-80,12,6);c.fill();c.fillStyle=r[1]>=1?GR:AC;rr(c,40,y+18,Math.max(12,(w-80)*r[1]),12,6);c.fill()});
+  if(live){const k=Math.min((T-5)/.5,1);c.globalAlpha=k;c.fillStyle=GR;c.beginPath();c.arc(70,330,12,0,7);c.fill();tx(c,"LIVE",96,350,"72px "+DISP,FG);
+    c.strokeStyle="rgba(243,241,234,.45)";c.lineWidth=2;rr(c,40,390,190,56,14);c.stroke();rr(c,250,390,200,56,14);c.stroke();
+    tx(c,"App Store",135,426,"600 22px "+SANS,FG,"center");tx(c,"Google Play",350,426,"600 22px "+SANS,FG,"center");c.globalAlpha=1}},0,2.6,-6,0,20);
+const phoneTex=(()=>{const cn=document.createElement("canvas");cn.width=180;cn.height=360;const c=cn.getContext("2d");const g=c.createLinearGradient(0,0,0,360);g.addColorStop(0,"#1b1b22");g.addColorStop(1,"#08080a");c.fillStyle=g;c.fillRect(0,0,180,360);
+  c.fillStyle=AC;rr(c,16,20,148,90,14);c.fill();for(let k=0;k<3;k++){c.fillStyle="rgba(243,241,234,.14)";rr(c,16,128+k*58,148,46,10);c.fill()}
+  const t=track(new THREE.CanvasTexture(cn));return t})();
+const phG=track(new THREE.BoxGeometry(1.1,2.2,.14)),phM=track(new THREE.MeshStandardMaterial({color:0x1b1b20,metalness:.6,roughness:.4})),scG=track(new THREE.PlaneGeometry(.98,2.08)),scM=track(new THREE.MeshBasicMaterial({map:phoneTex})),phones=[];
+for(let i=0;i<7;i++){const g=new THREE.Group();g.add(new THREE.Mesh(phG,phM));const sc=new THREE.Mesh(scG,scM);sc.position.z=.075;g.add(sc);
+  g.position.set((i-3)*2.5,-.9,3.2-Math.abs(i-3)*.7);g.rotation.y=-(i-3)*.14;stations[5].add(g);phones.push(g)}
+const rackG=track(new THREE.BoxGeometry(1.8,7,1.6)),rackM=track(new THREE.MeshStandardMaterial({color:0x121217,metalness:.5,roughness:.5})),ledG=track(new THREE.BoxGeometry(.5,.1,.02)),leds=[];
+[-1,1].forEach(sd=>{for(let j=0;j<2;j++){const r=new THREE.Mesh(rackG,rackM);r.position.set(sd*(9.5+j*2.2),.5,-4-j*1.6);stations[5].add(r);
+  for(let k=0;k<14;k++){const lm=track(new THREE.MeshBasicMaterial({color:0x3ddc84}));const l=new THREE.Mesh(ledG,lm);l.position.set(r.position.x-.45+(k%2)*.9,-2.6+Math.floor(k/2)*.75,r.position.z+.82);stations[5].add(l);leds.push([lm,Math.random()*9])}}});
+
+/* ============ 07 DOWNLOAD: a user installs the app ============ */
+const big=panel(6,3.8,7.6,304,608,(c,w,h,t)=>{
+  const T=t%13;c.fillStyle="#0e0e12";c.fillRect(0,0,w,h);tx(c,"9:41",24,36,"600 18px "+SANS,FG);
+  if(T<5.2){
+    tx(c,"App Store",w/2,92,"600 20px "+SANS,MU,"center");
+    c.fillStyle=AC;rr(c,w/2-60,124,120,120,28);c.fill();tx(c,"PP",w/2,206,"64px "+DISP,"#fff","center");
+    tx(c,"Your App",w/2,288,"600 30px "+SANS,FG,"center");tx(c,"Free · iOS & Android",w/2,318,"400 17px "+SANS,MU,"center");
+    if(T<1.2){c.fillStyle=AC;rr(c,w/2-70,400,140,50,25);c.fill();tx(c,"GET",w/2,434,"700 22px "+SANS,"#fff","center")}
+    else if(T<4.2){const p=(T-1.2)/3;c.lineWidth=6;c.strokeStyle="rgba(243,241,234,.15)";c.beginPath();c.arc(w/2,425,34,0,7);c.stroke();
+      c.strokeStyle=AC;c.lineCap="round";c.beginPath();c.arc(w/2,425,34,-Math.PI/2,-Math.PI/2+TAU*p);c.stroke();
+      c.fillStyle=AC;rr(c,w/2-9,416,18,18,4);c.fill();tx(c,"Downloading… "+Math.round(p*100)+"%",w/2,500,"500 20px "+SANS,MU,"center")}
+    else{c.fillStyle=GR;rr(c,w/2-70,400,140,50,25);c.fill();tx(c,"OPEN",w/2,434,"700 22px "+SANS,"#08080a","center");tx(c,"✓ Installed",w/2,490,"500 20px "+SANS,GR,"center")}
+  }else phoneUI(c,10,10,w-20,h-20,Math.min(Math.floor((T-5.2)*1.4),5));
+},3.9,1.1,-1,-.22,12);
+panel(6,4.4,.95,352,76,(c,w,h,t)=>{c.clearRect(0,0,w,h);const T=t%13;if(T<4.2||T>10)return;
+  c.fillStyle="rgba(22,22,28,.96)";rr(c,2,2,w-4,h-4,22);c.fill();c.strokeStyle=LN;c.lineWidth=2;c.stroke();
+  c.fillStyle=GR;c.beginPath();c.arc(40,h/2,16,0,7);c.fill();c.strokeStyle="#08080a";c.lineWidth=4;c.lineCap="round";c.beginPath();c.moveTo(32,h/2);c.lineTo(38,h/2+7);c.lineTo(49,h/2-7);c.stroke();
+  tx(c,"Download complete",72,32,"600 22px "+SANS,FG);tx(c,"Your App is ready to open",72,56,"400 16px "+SANS,MU)},-4.6,4.6,0,0,10,true);
+const skin=track(new THREE.MeshStandardMaterial({color:0xe3c4a4,roughness:.8,flatShading:true})),hood=track(new THREE.MeshStandardMaterial({color:0xff3b1d,roughness:.7,flatShading:true})),
+  pants=track(new THREE.MeshStandardMaterial({color:0x25262e,roughness:.8,flatShading:true})),hair=track(new THREE.MeshStandardMaterial({color:0x14110f,roughness:.9,flatShading:true})),shoe=track(new THREE.MeshStandardMaterial({color:0xe8e6df,roughness:.6}));
+const P=new THREE.Group();P.position.set(-4.6,-3,0);stations[6].add(P);
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+function limb(a,b,r,mat){const v=new THREE.Vector3().subVectors(b,a),len=v.length(),m=new THREE.Mesh(track(new THREE.CylinderGeometry(r,r,len,10)),mat);
+  m.position.copy(a).addScaledVector(v,.5);m.quaternion.setFromUnitVectors(V(0,1,0),v.normalize());P.add(m);return m}
+[-1,1].forEach(sd=>{limb(V(sd*.38,.2,0),V(sd*.38,2.1,0),.33,pants);
+  const sh=new THREE.Mesh(track(new THREE.BoxGeometry(.6,.28,1)),shoe);sh.position.set(sd*.38,.14,.22);P.add(sh);
+  limb(V(sd*.88,3.95,0),V(sd*1.05,2.8,.5),.22,hood);limb(V(sd*1.05,2.8,.5),V(sd*.5,3.15,1.1),.19,hood);
+  const hd=new THREE.Mesh(track(new THREE.SphereGeometry(.2,10,8)),skin);hd.position.set(sd*.5,3.15,1.1);P.add(hd);
+  const sj=new THREE.Mesh(track(new THREE.SphereGeometry(.3,10,8)),hood);sj.position.set(sd*.88,3.95,0);P.add(sj)});
+const torso=new THREE.Mesh(track(new THREE.CylinderGeometry(.82,.72,2.2,12)),hood);torso.position.y=3.2;P.add(torso);
+const head=new THREE.Group();head.position.set(0,5.0,0);P.add(head);
+head.add(new THREE.Mesh(track(new THREE.SphereGeometry(.62,14,10)),skin));
+const cap=new THREE.Mesh(track(new THREE.SphereGeometry(.67,14,8,0,TAU,0,Math.PI*.55)),hair);cap.rotation.x=-.15;head.add(cap);
+const neck=new THREE.Mesh(track(new THREE.CylinderGeometry(.22,.26,.4,8)),skin);neck.position.y=4.4;P.add(neck);
+const hand=new THREE.Group();hand.position.set(0,3.1,1.15);hand.rotation.x=-.4;P.add(hand);
+hand.add(new THREE.Mesh(track(new THREE.BoxGeometry(1,1.95,.1)),phM));
+const hs=new THREE.Mesh(track(new THREE.PlaneGeometry(.88,1.84)),track(new THREE.MeshBasicMaterial({map:big.material.map})));hs.position.z=.056;hand.add(hs);
+
+/* ============ titles ============ */
+for(let i=0;i<S;i++)panel(i,10,2.2,1024,225,(c,w,h)=>{c.clearRect(0,0,w,h);tx(c,"0"+(i+1)+" /",4,52,"500 34px "+MONO,AC);c.textBaseline="alphabetic";tx(c,STAGES[i][0].toUpperCase(),0,196,"170px "+DISP,FG)},-2.2,7.4,-4,0,0,true);
+const grid=new THREE.GridHelper(320,128,0xff3b1d,0x2a2a32);grid.position.set(0,-3,-70);grid.material.transparent=true;grid.material.opacity=.22;scene.add(grid);track(grid.geometry);track(grid.material);
+if(document.fonts&&document.fonts.load)Promise.all([document.fonts.load("170px Anton"),document.fonts.load("600 20px Onest")]).then(()=>{ALLP.forEach(o=>{o.draw(o.c,o.cw,o.ch,4);o.tex.needsUpdate=true})}).catch(()=>{});
+
+/* ============ section anchors drive the camera ============ */
+const ids=["top","story","ventures","impact","voices","contact",null];
+let ys=[0,1,2,3,4,5,6];
+function measure(){const max=document.documentElement.scrollHeight-innerHeight;
+  ys=ids.map((id,k)=>{if(k===S-1)return max;const el=document.getElementById(id);if(!el)return k*innerHeight;return el.getBoundingClientRect().top+scrollY-innerHeight*(k?.62:0)});
+  ys[0]=0;ys[S-2]=Math.min(ys[S-2],max-innerHeight*.3);for(let k=1;k<S;k++)if(ys[k]<=ys[k-1])ys[k]=ys[k-1]+1}
+function fAt(y){if(y<=ys[0])return 0;for(let i=0;i<S-1;i++)if(y<ys[i+1])return i+(y-ys[i])/(ys[i+1]-ys[i]);return S-1}
+let hudN=-1;
+const hn=document.querySelector("#stage .sn"),ht=document.querySelector("#stage .st"),hc=document.querySelector("#stage .sc"),hb=document.querySelectorAll("#stage .sb i");
+function hud(n){if(n===hudN||!hn)return;hudN=n;hn.textContent="0"+(n+1)+" / 0"+S;ht.textContent=STAGES[n][0];hc.textContent=STAGES[n][1];hb.forEach((b,k)=>b.classList.toggle("on",k<=n))}
+
+let lw=0,lh=0;
+function size(){const w=innerWidth,h=Math.max(innerHeight,cv.clientHeight||0);if(w===lw&&Math.abs(h-lh)<150)return;lw=w;lh=h;
+  R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();const sc=w/h<1?.62:1;stations.forEach(g=>g.scale.setScalar(sc));measure();if(still)draw(0,4)}
+addEventListener("resize",size);addEventListener("load",()=>{measure();if(still)draw(0,4)});
+let fT=0,f=0,mx=0,my=0,cx=0,cy=0,introStart=null;
+function readScroll(){fT=fAt(scrollY);if(still)draw(0,4)}
+addEventListener("scroll",readScroll,{passive:true});
+addEventListener("pointermove",e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
+
+function draw(dt,t){
+  f=still?fT:f+(fT-f)*Math.min(1,dt*4);
+  hud(Math.round(f));
+  if(introStart===null&&document.getElementById("top").classList.contains("go"))introStart=t;
+  const ie=still?1:(introStart===null?0:Math.min((t-introStart)/2.2,1)),ei=1-Math.pow(1-ie,3);
+  cx+=(mx-cx)*.05;cy+=(my-cy)*.05;
+  const a=cam.aspect,dist=a<1?17:14,z=-f*SP+dist+(1-ei)*22;
+  cam.position.set(cx*2.2+Math.sin(f*2.4)*.9,1.2-cy*1.2+Math.sin(f*3.1)*.25,z);
+  cam.lookAt(cam.position.x*.35,.9,z-12);cl.position.set(cam.position.x,3,z-2);
+  stations.forEach((g,i)=>{g.visible=Math.abs(f-i)<2.3});
+  /* live panels near the camera */
+  if(!still)ALLP.forEach(o=>{if(!o.fps||Math.abs(f-o.st)>1.05)return;o.acc+=dt;if(o.acc>=1/o.fps){o.acc=0;o.draw(o.c,o.cw,o.ch,t);o.tex.needsUpdate=true}});
+  if(!still){
+    notes.forEach(m=>{m.position.y=m.userData.y+Math.sin(t*.8+m.userData.p)*.25;m.rotation.z=Math.sin(t*.5+m.userData.p)*.03});
+    gear1.rotation.z=t*.6;gear2.rotation.z=-t*.9+.4;
+    cubes.forEach((m,i)=>{m.position.x=-8+((t*1.6+i*3)%17)});
+    const T=t%12;bugs.forEach((m,i)=>{const an=t*.5+i*TAU/6,sq=Math.min(Math.max((T-(i*1.5+1))/.4,0),1);
+      m.position.set(Math.cos(an)*7.5,1.7+Math.sin(an*1.3)*3.4,-2+Math.sin(an)*3);m.rotation.set(t,t*1.3,0);m.scale.setScalar(Math.max(1-sq,.001))});
+    head.rotation.x=.25+Math.sin(t*.8)*.05;P.rotation.y=Math.sin(t*.4)*.1;hand.position.y=3.1+Math.sin(t*1.3)*.03;
+    phones.forEach((g,i)=>{g.position.y=-.9+Math.sin(t*1.1+i)*.15});
+    leds.forEach(l=>{const on=Math.sin(t*3+l[1])>-.3;l[0].color.setHex(on?(l[1]>6?0xff6a3d:0x3ddc84):0x1a2a1f)});
+  }
+  R.render(scene,cam);
+}
+let running=false,lastT=0;
+function frame(now){if(!running)return;requestAnimationFrame(frame);const dt=Math.min((now-lastT)/1000,.05);lastT=now;draw(dt,now/1000)}
+function setRun(on){if(still||on===running)return;running=on;if(on){lastT=performance.now();requestAnimationFrame(frame)}}
+document.addEventListener("visibilitychange",()=>setRun(!document.hidden));
+cv.addEventListener("webglcontextlost",e=>{e.preventDefault();running=false});
+cv.addEventListener("webglcontextrestored",()=>setRun(!document.hidden));
+size();measure();readScroll();f=fT;
+if(still)draw(0,4);else setRun(true);
+addEventListener("pagehide",()=>{running=false;dispo.forEach(o=>o.dispose&&o.dispose());R.dispose()});
+})();
+</script>
+</body>
+</html>
