@@ -19,7 +19,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Install Lenis
+        run: npm install lenis
+
+      - name: Build portfolio
         run: npm run build
 
       - name: Deploy
